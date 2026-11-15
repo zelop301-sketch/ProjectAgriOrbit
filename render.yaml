@@ -1,0 +1,18 @@
+# Render Blueprint: FastAPI / NASA POWER server / original 3D dashboard.
+# Set this up as a Web Service (not Static Site).
+services:
+  - type: web
+    name: agriorbit-phase42-demo
+    runtime: python
+    plan: free
+    branch: main
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn deploy_public:app --host 0.0.0.0 --port $PORT --workers 1
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.11
+      - key: AGRIORBIT_PUBLIC_DEMO
+        value: "1"
+      - key: AGRIORBIT_CACHE_DIR
+        value: /tmp/agriorbit-cache
