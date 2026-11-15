@@ -1,0 +1,10 @@
+AgriORBIT Phase 15 — Immersive Orbital Boot (portfolio research prototype)
+
+Features: supplied AgriORBIT emblem embedded in browser HUD; orbital calibration animations;
+radar sweep, decorative particles, progress-readiness synchronization; 4 real startup checks;
+automatic mission transition, replay and presentation hold mode; reduced-motion support.
+
+Integrity: boot animation is not NASA data retrieval, rover calibration, validated field sensing,
+or NASA approval. The previous historical NASA data, crop comparison and guidelines features remain.
+
+Browser screenshot test: blocked by Chrome policy in the current environment; user should verify visually on their Windows machine.

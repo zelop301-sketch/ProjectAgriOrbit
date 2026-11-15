@@ -1,0 +1,25 @@
+/* Phase 23 science-and-rights panels, layered onto existing Ultra HUD */
+.p23-head{margin-top:26px;padding:18px 20px 14px;border-radius:16px;border:1px solid rgba(0,240,255,.30);background:linear-gradient(115deg,rgba(0,240,255,.095),rgba(0,255,102,.045));}
+.p23-head span{font-family:monospace;color:#67f2d4;letter-spacing:.15em;font-size:11px;font-weight:700}
+.p23-head h2{font-size:clamp(21px,2vw,30px);margin:8px 0;color:#e9ffff}
+.p23-head p{font-size:13px;color:#b4d4dc;margin:0}
+.p23-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:14px;margin-top:16px}
+.p23-panel{min-width:0;display:flex;flex-direction:column;gap:11px}
+.p23-panel h3{margin:0}.p23-panel>p{margin:0;color:#c1dce0;font-size:13px;line-height:1.55}
+.p23-check{display:flex;align-items:flex-start;gap:9px;font-size:13px;color:#d1f0e9;line-height:1.35}
+.p23-check input{accent-color:#00ff66;flex:0 0 auto;margin-top:2px;min-width:16px;min-height:16px}
+.p23-three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.p23-three input{width:100%;min-width:0}
+.p23-output{overflow-wrap:anywhere;background:rgba(2,25,35,.62);border:1px solid rgba(0,240,255,.22);border-radius:12px;padding:13px;font:12px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace;color:#a8f1e7;min-height:75px}
+.p23-output[data-issue='true']{border-color:rgba(255,183,3,.5);color:#ffda86}
+.p23-output strong{display:block;margin-bottom:8px;color:#b7ffdc;font-weight:800}.p23-output p{margin:5px 0}.p23-output ul{padding-left:19px}.p23-output li{margin:5px 0}
+.p23-link{color:#80f7e7;font-size:13px;text-decoration:underline;text-underline-offset:3px}
+.p23-table-wrap{overflow-x:auto;max-height:310px;overflow-y:auto;border:1px solid rgba(0,240,255,.2);border-radius:12px}
+.p23-table{width:100%;border-collapse:collapse;min-width:365px;font-size:12px;color:#ccece9;font-variant-numeric:tabular-nums}
+.p23-table th{text-align:left;color:#77e9d1;background:#052838;position:sticky;top:0}
+.p23-table th,.p23-table td{padding:9px 10px;border-bottom:1px solid rgba(0,240,255,.13)}
+.p23-table tbody tr:nth-child(even){background:rgba(0,225,175,.035)}
+@media(max-width:1000px){.p23-grid{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:540px){.p23-three{grid-template-columns:minmax(0,1fr)}.p23-head{padding:13px}.p23-panel{padding:13px}}
+
+.hazard22-view .page-heading h1{color:#eafff8;text-shadow:0 0 16px rgba(0,240,255,.12)}

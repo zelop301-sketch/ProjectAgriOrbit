@@ -1,0 +1,24 @@
+AGRIORBIT PHASE 42 — PRESERVATION AUDIT
+=====================================
+Base archive: AgriORBIT_PHASE41_ORIGINAL_DESIGN_NASA_SCIENCE.zip
+Base files checked: 195
+Base files deleted: 0
+Base files with changed bytes: 2
+  app/seasonal_science.py                  — improved crop-season evidence
+  web/nasa-seasonal-workspace.html         — fixed navigation, premium evidence presentation
+Original Phase 34 index.html, app.js, CSS, all 3D, animations, cinematic boot,
+rover renderer, images and other old web assets: UNCHANGED (SHA-256 content check).
+New files (not replacements):
+  web/science-phase42-ui.js
+  tests/test_phase42_judge_science.py
+  START_AGRIORBIT_PHASE42.py
+  README_PHASE42_FIRST.txt
+  docs/PHASE42_JUDGE_VALIDATION.md
+  PHASE42_PRESERVATION_AUDIT.txt
+
+Local pytest run: 232 passed, 0 failed.
+Isolated Chromium component: 3 evidence cards rendered; 15 metric blocks;
+synthetic data warning; link corrected; on simulated NASA error previous report
+was cleared and export disabled; no JavaScript errors.
+Environment browser limitation: normal http:// navigation blocked in Chromium;
+actual Windows browser, internet NASA retrieval and on-farm accuracy unverified.

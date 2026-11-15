@@ -1,0 +1,7 @@
+AgriORBIT Phase 28 — Official Leaf Cursor
+Replaces the Phase 27 emblem cursor with an animated native SVG green leaf.
+Three orbiting green orbs, speed-reactive cyan/emerald wind ribbons, click ripples and Web Audio water-drop sound remain in the real web app.
+Source implementation: web/leaf-cursor.js, web/styles.css, web/index.html, web/drop-sfx.js.
+No GIF is used for the cursor. Boot retains its separate optimized core and 15-second seedling timer.
+Run port 8028; verify /api/health reports phase28-official-leaf-cursor-2.8.0.
+This build retains the original scientific and PHIVOLCS modules and previous FPS Boost renderer.

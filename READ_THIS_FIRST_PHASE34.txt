@@ -1,0 +1,15 @@
+AGRIORBIT PHASE 34 — BOTOLAN EVIDENCE TO FARMER DECISIONS
+
+This is the complete working application, not a render/GIF-only deliverable.
+
+1. Extract the ZIP to a NEW Windows folder.
+2. Double-click START_AGRIORBIT_WINDOWS.cmd.
+3. Go to http://127.0.0.1:8034/?force-15=1#botolan
+4. Open BOTOLAN EL NINO and find the first Phase 34 judge workflow.
+5. Use Run NASA 30-year comparison with Internet access.
+6. Use Synthetic judge rehearsal ONLY for a clearly labeled offline demo.
+7. Check /api/health for phase34-botolan-evidence-decisions-3.4.0.
+
+Never present simulated rainfall departures as NASA observations.
+No field planting authorization is supplied. Botolan is a town reference point.
+See README.md and docs/PHASE34_SCIENCE_AND_JUDGE_DEMO.md.

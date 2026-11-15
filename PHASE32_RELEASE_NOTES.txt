@@ -1,0 +1,1 @@
+Phase 32: 100 FPS adaptive target preset, real FPS/CPU stats, optimized 3D camera projection, cached terrain plate, event throttling; 15-second boot and scientific APIs preserved. Actual FPS device-dependent. Port 8032.

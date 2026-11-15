@@ -1,0 +1,38 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "hazard_type": "FICTIONAL EXAMPLE / Not PHIVOLCS"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              120.024,
+              15.288
+            ],
+            [
+              120.026,
+              15.288
+            ],
+            [
+              120.026,
+              15.29
+            ],
+            [
+              120.024,
+              15.29
+            ],
+            [
+              120.024,
+              15.288
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

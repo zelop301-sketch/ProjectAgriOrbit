@@ -1,0 +1,9 @@
+AGRIORBIT PHASE 33 — BOTOLAN EL NINO FIELD SHIFT
+
+1. Extract the ZIP to a new folder; stop previous servers.
+2. Double-click START_AGRIORBIT_WINDOWS.cmd.
+3. Open http://127.0.0.1:8033/?force-15=1#botolan and skip/complete 15-second boot.
+4. Select BOTOLAN EL NINO and click Fetch real NASA POWER data (Internet needed).
+5. If NASA API is unavailable, choose Synthetic rehearsal (clearly NOT NASA).
+6. The 2026 local deficit and crop suitability may be unavailable: never claim a verified drought or validated planting recommendation.
+7. Check http://127.0.0.1:8033/api/health.

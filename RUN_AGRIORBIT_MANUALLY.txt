@@ -1,0 +1,13 @@
+AGRIORBIT PHASE 33 — MANUAL WINDOWS START
+
+Extract ZIP into a new folder and open PowerShell IN THAT FOLDER.
+
+py -m pip install -r requirements.txt
+py -m uvicorn app.main:app --host 127.0.0.1 --port 8033
+
+Visit http://127.0.0.1:8033/?force-15=1#botolan
+Check http://127.0.0.1:8033/api/health
+Expected: phase33-botolan-field-shift-3.3.0
+
+Offline UI-only: open VERIFY_PHASE33_BOTOLAN_OFFLINE.html, whose values are purely synthetic.
+For real NASA data, Internet access to power.larc.nasa.gov is necessary. No automatic fallback is used.

@@ -1,0 +1,1 @@
+AgriORBIT Phase 16: new AI-generated emblem, 15-second seedling boot in the real system, 15 local WebP frames, independent four-check readiness, skip/replay/hold/reduced-motion support.

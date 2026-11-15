@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="agriorbit-asset-base" content="web/" /><meta name="agriorbit-cursor-asset" content="web/agriorbit-cursor.webp?v=phase27-smooth-core-fps-2.7.0" />
+  <meta name="theme-color" content="#103e35" /><meta name="agriorbit-build" content="phase27-smooth-core-fps-2.7.0" />
+  <meta name="description" content="AgriORBIT NASA — transparent agricultural crop-rotation decision-support MVP" />
+  <title>AgriORBIT Phase 25 | Reliable Boot + Emblem Cursor</title>
+  <link rel="icon" href="web/agriorbit-emblem.png?v=phase27-smooth-core-fps-2.7.0" type="image/png" />
+  <link rel="apple-touch-icon" href="web/agriorbit-emblem.png?v=phase27-smooth-core-fps-2.7.0" />
+  <link rel="stylesheet" href="web/styles.css?v=phase27-smooth-core-fps-2.7.0" />
+  <link rel="stylesheet" href="web/hazards.css?v=phase27-smooth-core-fps-2.7.0" />
+  <link rel="stylesheet" href="web/phase23.css?v=phase27-smooth-core-fps-2.7.0" />
+  <script defer src="web/rover3d.js?v=phase27-smooth-core-fps-2.7.0"></script>
+  <script defer src="web/app.js?v=phase27-smooth-core-fps-2.7.0"></script>
+  <script defer src="web/boot-fx.js?v=phase27-smooth-core-fps-2.7.0"></script>
+  <script defer src="web/seedling-boot.js?v=phase27-smooth-core-fps-2.7.0"></script>
+  <script defer src="web/mission-ui.js?v=phase27-smooth-core-fps-2.7.0"></script>
+  <script defer src="web/hud5.js?v=phase27-smooth-core-fps-2.7.0"></script>
+  <script defer src="web/command-dashboard.js?v=phase27-smooth-core-fps-2.7.0"></script>
+  <script defer src="web/leaf-cursor.js?v=phase27-smooth-core-fps-2.7.0"></script>
+  <script defer src="web/drop-sfx.js?v=phase27-smooth-core-fps-2.7.0"></script>
+  <script defer src="web/precision-ui.js?v=phase27-smooth-core-fps-2.7.0"></script>
+  <script defer src="web/spaceapps-ui.js?v=phase27-smooth-core-fps-2.7.0"></script>
+  <script defer src="web/science-ui.js?v=phase27-smooth-core-fps-2.7.0"></script>
+  <script defer src="web/hazards-ui.js?v=phase27-smooth-core-fps-2.7.0"></script>
+  <script defer src="web/phase23-ui.js?v=phase27-smooth-core-fps-2.7.0"></script>
+<script>
+// Offline verification only: simulated API responses are never presented as NASA data.
+const offlineScenarios=[{id:'A',title:'Baseline',score:50,crops:['Maize'],description:'synthetic offline scenario',breakdown:[],adjustments:[],evidence_references:[]},{id:'B',title:'Legumes',score:55,crops:['Soybean'],description:'synthetic offline scenario',breakdown:[],adjustments:[],evidence_references:[]},{id:'C',title:'Diversified',score:60,crops:['Rice'],description:'synthetic offline scenario',breakdown:[],adjustments:[],evidence_references:[]}];
+window.fetch = async (url,opts={}) => {
+ const s=String(url);
+ let d={status:'ok',build:'phase27-smooth-core-fps-2.7.0'};
+ if(s.includes('/api/compare')) d={scenarios:offlineScenarios,method:{formula:'Synthetic offline',scoring_input:'Synthetic',climate_use:'None',climate_formula:'None',calibration:'Unvalidated'},missing_evidence:[],advisory:'Synthetic test only'};
+ else if(s.includes('/api/mission/environment')) d={weather_mode:'normal',day_phase:'day',management:{irrigation_intensity_pct:35,drainage_intensity_pct:35},zones:[{stress_index:22},{stress_index:37},{stress_index:49}],average_stress_index:36};
+ else if(s.includes('/api/mission/')) d={source_type:'synthetic',status:'simulated',sensors:{},battery_pct:80,phase:'SIMULATED'};
+ return {ok:true,status:200,json:async()=>d};
+};
+</script>
+</head>
+<body>
+<div id="calibration" class="calibration" role="dialog" aria-modal="true" aria-labelledby="cal-title" aria-describedby="cal-description">
+  <div class="calibration-art" aria-hidden="true"></div>
+  <canvas class="cal-particle-canvas" id="cal-particle-canvas" aria-hidden="true"></canvas>
+  <div class="calibration-glow" aria-hidden="true"></div>
+  <div class="calibration-wrapper">
+    <header class="cal-top">
+      <div class="cal-brand"><img src="web/agriorbit-emblem.png?v=phase27-smooth-core-fps-2.7.0" class="cal-brand-image" alt="" /><span>Agri<span>ORBIT</span> <small>NASA</small></span></div>
+      <span class="cal-build cal18-verified">● PHASE 27 · LIVING AI CORE · 15s BOOT</span>
+    </header>
+    <div class="cal-content">
+      <section class="cal-main">
+        <div class="cal-overline"><span class="cal-live-dot"></span> PHASE 27 LIVING CORE · PULSING EMBLEM · 15-SECOND CALIBRATION</div>
+        <h1 id="cal-title">AgriORBIT<br><em>Calibration</em></h1><div class="cal18-release-banner" id="cal18-release-banner"><span class="cal18-signal"></span><strong>PHASE 27 LIVING CORE ACTIVE</strong><span>15.0s FULL-LENGTH BAR</span></div>
+        <p id="cal-description">Watch the AgriORBIT core pulse with a rotating emerald aura while the seedling grows over 15 seconds. All core effects are cinematic; actual startup checks are separate.</p>
+        <div class="cal-visual-row">
+        <div class="cal-hologram cal-orbital-stage" aria-label="Decorative animated orbital calibration around the AgriORBIT emblem" role="img">
+          <div class="cal-stage-aura"></div>
+          <div class="cal-radar-grid"></div>
+          <div class="cal-sweep-cone"></div>
+          <div class="cal-orbit-shell cal-orbit-shell-outer"><span class="cal-orbit-beacon"></span></div>
+          <div class="cal-orbit-shell cal-orbit-shell-middle"><span class="cal-orbit-beacon"></span></div>
+          <div class="cal-orbit-shell cal-orbit-shell-inner"><span class="cal-orbit-beacon"></span></div>
+          <div class="cal-emblem-halo cal26-living-core cal27-fps-core" id="cal26-living-core" data-core-phase="0">
+            <span class="cal26-core-pulse cal26-core-pulse-a" aria-hidden="true"></span>
+            <span class="cal26-core-pulse cal26-core-pulse-b" aria-hidden="true"></span>
+            <span class="cal26-aura-rotor cal26-aura-rotor-a" aria-hidden="true"><i></i></span>
+            <span class="cal26-aura-rotor cal26-aura-rotor-b" aria-hidden="true"><i></i></span>
+            <img class="cal-emblem cal26-core-gif" id="cal26-core-animation" src="web/agriorbit-living-core-fast.webp?v=phase27-smooth-core-fps-2.7.0" alt="" decoding="async" />
+            <span class="cal26-core-heart" aria-hidden="true"></span>
+          </div>
+          <div class="cal-arc cal-arc-one"></div><div class="cal-arc cal-arc-two"></div>
+          <span class="cal-crosshair cal-crosshair-n"></span><span class="cal-crosshair cal-crosshair-s"></span><span class="cal-crosshair cal-crosshair-e"></span><span class="cal-crosshair cal-crosshair-w"></span>
+          <span class="cal-float-label cal-float-label-left">ORBITAL SYSTEM<br><b>STANDBY</b></span>
+          <span class="cal-float-label cal-float-label-right">FIELD MODEL<br><b>SIMULATED</b></span>
+          <span class="cal-stage-caption">AGRIORBIT / LIVING AI CORE · CINEMATIC STARTUP</span>
+          <span class="cal26-core-status" id="cal26-core-status" aria-live="off">CORE STANDBY · VISUAL SIMULATION</span>
+        </div>
+          <section class="cal-seedling-reel" aria-label="Fifteen-second decorative seedling growth animation">
+            <header class="cal-seedling-reel-head"><span>◈ GROWTH PROTOCOL</span><strong id="cal-seed-countdown">15s</strong></header>
+            <div class="cal-seedling-viewport">
+              <img id="cal-sprout-image" class="cal-sprout-image" src="web/boot-frames/seed-00.webp?v=phase27-smooth-core-fps-2.7.0" width="241" height="405" alt="A seed sprouts into a glowing two-leaf seedling beneath the AgriORBIT insignia" decoding="async" />
+            </div>
+            <div class="cal-seedling-meta"><span id="cal-sprout-stage">SEED DORMANT</span><output id="cal-sprout-percent">0%</output></div>
+            <div class="cal-seedling-track" aria-hidden="true"><span id="cal-seed-bar"></span></div>
+            <small class="cal-reel-note">CINEMATIC GROWTH • NOT A LIVE SENSOR</small>
+          </section>
+        </div>
+        <div class="cal25-engine-state" id="cal25-engine-state" role="status">BOOT ENGINE V26 · INITIALIZING VISUAL CORE…</div>
+        <div class="cal-cinematic-note" id="cal-cinematic-note">Growth sequence 00:15 remaining · Local checks are evaluated independently.</div>
+        <div class="cal-progress-label"><span id="cal-progress-label">ORBITAL INITIALIZATION · CINEMATIC SEQUENCE</span><strong id="cal-progress-value">0%</strong></div>
+        <div class="cal-phase-meter" aria-label="Five stages of decorative 15-second boot sequence">
+          <span data-cal-stage="0" class="is-active"><i>01</i> AWAKEN</span>
+          <span data-cal-stage="1"><i>02</i> GERMINATE</span>
+          <span data-cal-stage="2"><i>03</i> EMERGE</span>
+          <span data-cal-stage="3"><i>04</i> UNFURL</span>
+          <span data-cal-stage="4"><i>05</i> READY</span>
+        </div>
+        <div class="cal19-banner" id="cal19-version" role="status"><strong>PHASE 27 — SYNCHRONIZED CORE + GROWTH • FPS OPTIMIZED</strong><span>PORT 8027 • 0 → 100% IN 15s</span></div>
+        <div class="cal-progress-shell">
+          <div class="cal-progress" role="progressbar" aria-label="15-second cinematic growth progress, not system readiness" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="cal-progress"><span id="cal-progress-fill"></span><span class="cal-progress-spark" aria-hidden="true"></span></div>
+          <div class="cal-progress-ticks" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="cal-timeline-foot"><span id="cal-sequence-time">00:00 / 00:15</span><span id="cal-check-count" aria-live="polite">LOCAL CHECKS · 0/4 VERIFIED</span></div>
+        <div id="cal-summary" class="cal-summary" role="status" aria-live="polite">Local application readiness is evaluated separately from this 15-second visual sequence.</div>
+        <div class="cal-actions">
+          <button id="cal-enter" class="cal-enter" type="button" disabled>Enter mission control <span aria-hidden="true">↗</span></button>
+          <button id="cal-retry" class="cal-retry" type="button" hidden>Retry checks</button>
+          <button id="cal-skip" class="cal-skip" type="button">Skip 15s intro ↗</button>
+        </div>
+      </section>
+      <aside class="cal-aside" aria-label="Startup check results">
+        <span class="cal-aside-kicker">MISSION STARTUP • 4 ACTUAL CHECKS</span>
+        <h2>System diagnostics</h2>
+        <ul class="cal-checks">
+          <li id="cal-check-interface"><span class="cal-check-icon">01</span><span><strong>Interface modules</strong><small>Local browser components</small></span><b>Queued</b></li>
+          <li id="cal-check-farm"><span class="cal-check-icon">02</span><span><strong>Farm profile</strong><small>Stored input or sample defaults</small></span><b>Queued</b></li>
+          <li id="cal-check-api"><span class="cal-check-icon">03</span><span><strong>Backend health</strong><small>FastAPI response check</small></span><b>Queued</b></li>
+          <li id="cal-check-scenarios"><span class="cal-check-icon">04</span><span><strong>Rotation engine</strong><small>Initial heuristic comparison</small></span><b>Queued</b></li>
+          <li class="cal-external"><span class="cal-check-icon">05</span><span><strong>NASA POWER historical data</strong><small>Manual connection on dashboard</small></span><b>Not fetched</b></li>
+          <li class="cal-external"><span class="cal-check-icon">06</span><span><strong>Agro Sentinel</strong><small>Concept; telemetry simulator only</small></span><b>Simulated</b></li>
+          <li class="cal-external"><span class="cal-check-icon">07</span><span><strong>3D farm visualization</strong><small>Concept art, not geospatial terrain; animated procedural field in Rover view</small></span><b>Client-side</b></li>
+        </ul>
+        <p class="cal-disclaimer">Only checks 01–04 count toward application readiness. The living AI core, rotating green aura and synchronized loading bars are 15-second decorative effects, not a diagnostic score. No NASA dataset, sensor, or rover is verified by this boot animation.</p>
+      </aside>
+    </div>
+    <footer class="cal-footer"><span>FIELD SHIFT: ADAPTING FARMS WITH NASA DATA</span><span>BOTOLAN, ZAMBALES, PHILIPPINES · RESEARCH PROTOTYPE</span><span id="cal-boot-clock" aria-hidden="true">BOOT SEQUENCE / 00:00</span></footer>
+  </div>
+</div>
+
+<div class="shell">
+  <aside class="sidebar">
+    <a class="brand" href="#overview" aria-label="AgriORBIT home">
+      <span class="brand-symbol"><svg viewBox="0 0 42 42" aria-hidden="true"><circle cx="21" cy="21" r="17" fill="none" stroke="#80e3ba" stroke-width="1.6"/><ellipse cx="21" cy="21" rx="19" ry="8" fill="none" stroke="#c5f5db" stroke-width="1.8" transform="rotate(-33 21 21)"/><path d="M13 27Q18 12 29 12Q28 24 13 27Z" fill="#8beaaf"/><circle cx="31" cy="11" r="3" fill="#fff0a0"/></svg></span>
+      <span><strong>AgriORBIT</strong><small>NASA • AGRIMIND AI</small></span>
+    </a>
+    <div class="side-caption tab-section-heading"><span>MISSION MODULES</span><span class="side-count">07 MODULES</span></div>
+    <nav class="nav nav-v9" aria-label="Main navigation">
+      <button type="button" class="nav-button active" data-view="command" aria-current="page"><span class="tab-icon-shell"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 9v12M12 14h5m-5 3h3"/></svg></span><span class="nav-copy"><span class="nav-main">MISSION CONTROL</span><small>Operations</small></span><span class="nav-index">01</span></button>
+      <button type="button" class="nav-button" data-view="overview" aria-current="false"><span class="tab-icon-shell"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="9" ry="4" transform="rotate(-28 12 12)"/><path d="m3 4 2 2m13 12 2 2"/></svg></span><span class="nav-copy"><span class="nav-main">NASA OVERVIEW</span><small>Earth observations</small></span><span class="nav-index">02</span></button>
+      <button type="button" class="nav-button" data-view="farm" aria-current="false"><span class="tab-icon-shell"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18M4 20V8l8-5 8 5v12M9 20v-7h6v7M6 10l6-3 6 3"/></svg></span><span class="nav-copy"><span class="nav-main">FARM PROFILE</span><small>Field setup</small></span><span class="nav-index">03</span></button>
+      <button type="button" class="nav-button" data-view="rotations" aria-current="false"><span class="tab-icon-shell"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h15m0 0-4-4m4 4-4 4M20 17H5m0 0 4-4m-4 4 4 4"/><path d="M12 11v2"/></svg></span><span class="nav-copy"><span class="nav-main">ROTATION STUDIO</span><small>Scenario planning</small></span><span class="nav-index">04</span></button>
+      <button type="button" class="nav-button" data-view="rover" aria-current="false"><span class="tab-icon-shell"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="9" width="14" height="8" rx="2"/><circle cx="8" cy="19" r="2"/><circle cx="17" cy="19" r="2"/><path d="M12 9V5m-3 0h6M3 13H1m22 0h-2"/></svg></span><span class="nav-copy"><span class="nav-main">AGRO SENTINEL</span><small>3D rover lab</small></span><span class="nav-index">05</span></button>
+      <button type="button" class="nav-button" data-view="evidence" aria-current="false"><span class="tab-icon-shell"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h8l4 4v14H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M14 3v5h5M9 12h7M9 16h7"/></svg></span><span class="nav-copy"><span class="nav-main">EVIDENCE & REPORT</span><small>Research record</small></span><span class="nav-index">06</span></button>
+      <button type="button" class="nav-button" data-view="guidelines" aria-current="false"><span class="tab-icon-shell"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3h8l4 4v14H4V3h4m7 0v5h5M8 13h8m-8 4h5"/><path d="m7 9 1.5 1.5L11 8"/></svg></span><span class="nav-copy"><span class="nav-main">NASA GUIDELINES</span><small>Judging & readiness</small></span><span class="nav-index">07</span></button>
+      <button type="button" class="nav-button" data-view="hazards" aria-current="false"><span class="tab-icon-shell"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 20 6-12 4 6 3-8 5 14Z"/><path d="m12 3 2 2 2-2M4 4l1 1"/></svg></span><span class="nav-copy"><span class="nav-main">PHIVOLCS HAZARDS</span><small>Volcanic / lahar context</small></span><span class="nav-index">08</span></button>
+    </nav>
+    <div class="side-grow"></div>
+    <div class="side-divider"></div>
+    <div class="pilot-side"><span class="pulse"></span><span>ACTIVE PILOT CONTEXT<small>Botolan, Zambales • PH</small></span></div>
+    <div class="sidebar-bottom">AgriORBIT NASA 2026<br/><span>Research prototype • v1.5 • Immersive Boot</span></div>
+  </aside>
+  <div class="body-container">
+    <header class="topbar">
+      <button class="mobile-menu" id="mobile-menu" aria-label="Toggle navigation">☰</button>
+      <div class="breadcrumbs">PROJECTS <span>/</span> AGRIORBIT NASA <span>/</span> <b id="crumb-view">Mission control</b></div>
+      <div class="topbar-right"><button id="agri-cursor-toggle" class="leaf-mode-toggle" type="button" aria-pressed="true" aria-label="Disable AgriORBIT emblem cursor" title="Turn AgriORBIT emblem cursor on or off"><img class="cursor-toggle-emblem" src="web/agriorbit-cursor.webp?v=phase27-smooth-core-fps-2.7.0" alt="" aria-hidden="true"><span id="agri-cursor-toggle-text">ORBIT FX ON</span></button><button id="agri-wind-toggle" class="wind-mode-toggle is-on" type="button" aria-pressed="true" aria-label="Wind trail intensity: breeze. Click to change." title="Wind trail: breeze. Click to cycle Breeze / Gust / Off."><span class="wind-mode-icon" aria-hidden="true">≋</span><span id="agri-wind-toggle-text">WIND: BREEZE</span></button><button id="agri-drop-sfx-toggle" class="drop-sfx-toggle is-on" type="button" aria-pressed="true" aria-label="Mute water drop click sounds" title="Quiet water drop sound on mouse click. Click to mute."><span class="drop-sfx-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-2.2 3.8-7 8.2-7 12a7 7 0 0 0 14 0c0-3.8-4.8-8.2-7-12Z"/><path d="M8.5 15.5a3.5 3.5 0 0 0 2.5 3"/></svg></span><span id="agri-drop-sfx-toggle-text">DROP SFX ON</span></button><button class="cal-replay" type="button" id="cal-replay" aria-label="Replay calibration startup screen">↻ Calibration</button><span class="top-chip"><span class="top-dot"></span> Phase 25 • Responsive Repatch</span><a href="https://power.larc.nasa.gov/docs/services/api/temporal/daily/" target="_blank" rel="noopener noreferrer" class="top-link">NASA POWER ↗</a></div>
+    </header>
+<nav class="mobile-workspace-tabs" aria-label="Mobile quick navigation">
+      <button type="button" class="mobile-workspace-tab active" data-view="command" aria-current="page"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 9v12M12 14h5m-5 3h3"/></svg><span>Mission Control</span></button>
+      <button type="button" class="mobile-workspace-tab" data-view="overview" aria-current="false"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="9" ry="4" transform="rotate(-28 12 12)"/><path d="m3 4 2 2m13 12 2 2"/></svg><span>Nasa Overview</span></button>
+      <button type="button" class="mobile-workspace-tab" data-view="farm" aria-current="false"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18M4 20V8l8-5 8 5v12M9 20v-7h6v7M6 10l6-3 6 3"/></svg><span>Farm Profile</span></button>
+      <button type="button" class="mobile-workspace-tab" data-view="rotations" aria-current="false"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h15m0 0-4-4m4 4-4 4M20 17H5m0 0 4-4m-4 4 4 4"/><path d="M12 11v2"/></svg><span>Rotation Studio</span></button>
+      <button type="button" class="mobile-workspace-tab" data-view="rover" aria-current="false"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="9" width="14" height="8" rx="2"/><circle cx="8" cy="19" r="2"/><circle cx="17" cy="19" r="2"/><path d="M12 9V5m-3 0h6M3 13H1m22 0h-2"/></svg><span>Agro Sentinel</span></button>
+      <button type="button" class="mobile-workspace-tab" data-view="evidence" aria-current="false"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h8l4 4v14H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M14 3v5h5M9 12h7M9 16h7"/></svg><span>Evidence & Report</span></button>
+      <button type="button" class="mobile-workspace-tab" data-view="guidelines" aria-current="false"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h10l4 4v14H6V3Zm8 0v5h6M10 13h7m-7 4h5"/></svg><span>NASA Guidelines</span></button>
+      <button type="button" class="mobile-workspace-tab" data-view="hazards" aria-current="false"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 20 6-12 4 6 3-8 5 14Z"/><path d="m12 3 2 2 2-2"/></svg><span>PHIVOLCS</span></button>
+    </nav>
+    <main id="main">
+      <!-- Phase 8: real, interactive mission dashboard inspired by the supplied reference image. -->
+      <section class="view active cmd-dashboard" id="view-command" aria-labelledby="cmd-title">
+        <header class="cmd-heading">
+          <div><span class="cmd-eyebrow">◈ ORBITAL · FIELD · ROVER · AI INTELLIGENCE</span><h1 id="cmd-title">AGRI<span>ORBIT</span> <small>MISSION CONTROL</small></h1></div>
+          <div class="cmd-heading-status"><span class="cmd-status-dot"></span><strong id="cmd-api-status">CONNECTING TO BACKEND</strong><small>ROVER & FARM SCENE: SIMULATED</small></div>
+        </header>
+        <div class="cmd-stat-grid" aria-label="Mission status summary">
+          <div class="cmd-stat"><span>◈ ROTATION OPTIONS</span><strong id="cmd-stat-scenarios" class="cmd-green">03</strong><small>experimental comparisons</small></div>
+          <div class="cmd-stat"><span>◉ SOIL MOISTURE</span><strong id="cmd-stat-moisture" class="cmd-cyan">—</strong><small>simulated sensor</small></div>
+          <div class="cmd-stat"><span>△ WATER EXPOSURE</span><strong id="cmd-stat-water" class="cmd-amber">—</strong><small>hypothetical index / 100</small></div>
+          <div class="cmd-stat"><span>⌖ FARM AREA</span><strong id="cmd-stat-area">1.0 <em>ha</em></strong><small>farmer entered</small></div>
+          <div class="cmd-stat"><span>▤ PLANNING FIELD</span><strong id="cmd-stat-field">BOTOLAN</strong><small>illustrative 3D scene</small></div>
+          <div class="cmd-stat"><span>◈ ROVER STATUS</span><strong class="cmd-amber" id="cmd-stat-rover">SIMULATED</strong><small>no hardware connection</small></div>
+          <div class="cmd-stat"><span>◎ NASA DATA</span><strong id="cmd-stat-nasa">NOT FETCHED</strong><small id="cmd-stat-nasa-detail">historical POWER data</small></div>
+        </div>
+        <div class="cmd-workspace">
+          <div class="cmd-stage">
+            <div class="cmd-scene" id="cmd-scene">
+              <div class="cmd-scene-art" aria-hidden="true"></div><div class="cmd-atmosphere" aria-hidden="true"></div>
+              <canvas id="cmd-viewport" width="1100" height="650" role="img" aria-label="Interactive animated procedural 3D farm, rover and satellite sweep, all simulated"></canvas>
+              <div class="cmd-scene-top"><span class="cmd-dot"></span> INTERACTIVE FARM DIGITAL TWIN <span class="cmd-scene-tag">SIMULATED · NOT SURVEYED</span><span class="cmd-ultra-tag" id="cmd-ultra-tag">✦ ULTRA GRAPHICS · SCIENCE V21</span></div>
+              <div class="cmd-rover-console cmd-glass">
+                <div class="cmd-card-head"><span>◈ AGRO SENTINEL ROVER</span><small>CONCEPT</small></div>
+                <div class="cmd-rover-status"><span class="cmd-green">● </span><span id="cmd-rover-phase">STANDBY</span><span class="cmd-status-note">SIMULATOR</span></div>
+                <div class="cmd-rover-layers" role="group" aria-label="Rover visualization layer">
+                  <button type="button" data-cmd-layer="structural" class="active" aria-pressed="true"><span class="tab-mini-icon">▣</span> STRUCTURE</button>
+                  <button type="button" data-cmd-layer="diagnostic" aria-pressed="false"><span class="tab-mini-icon">◉</span> DIAGNOSTICS</button>
+                  <button type="button" data-cmd-layer="navigation" aria-pressed="false"><span class="tab-mini-icon">⌁</span> LiDAR ROUTE</button>
+                </div>
+                <div class="cmd-rover-values"><span>Battery <b id="cmd-rover-battery">—</b></span><span>Motor °C <b id="cmd-rover-temp">—</b></span><span>Slip <b id="cmd-rover-slip">—</b></span></div>
+              </div>
+              <div class="cmd-satellite-label">◉ SATELLITE SWEEP <span>ILLUSTRATIVE</span></div>
+              <div class="cmd-scene-footer"><span>⌖ BOTOLAN · ZAMBALES · PHILIPPINES</span><span id="cmd-waypoint">WAYPOINT: BASE</span></div>
+              <div class="cmd-scene-tools" role="group" aria-label="3D camera controls"><button type="button" id="cmd-zoom-plus" title="Zoom into 3D scene">＋</button><button type="button" id="cmd-zoom-minus" title="Zoom out of 3D scene">−</button><button type="button" id="cmd-reset-camera" title="Reset camera">⌖</button></div>
+            </div>
+            <div class="cmd-mission-transport">
+              <button type="button" id="cmd-run" class="cmd-button-primary">▶ START ROVER MISSION</button>
+              <button type="button" id="cmd-restart">↺ Reset</button>
+              <label>Mission <input type="range" id="cmd-progress" min="0" max="100" value="0" aria-label="Simulated rover route progress" /></label>
+              <output id="cmd-progress-label">0%</output>
+              <label class="cmd-select-label">SPEED <select id="cmd-speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option><option value="3">3×</option></select></label>
+              <label class="cmd-check"><input type="checkbox" id="cmd-scanlines" /> SCANLINES</label><button type="button" id="cmd-immersive" aria-pressed="false" title="Expand simulated farm to immersive view">⛶ IMMERSIVE</button>
+            </div>
+          </div>
+          <aside class="cmd-insight-stack" aria-label="Mission data overlays">
+            <article class="cmd-widget cmd-canopy"><div class="cmd-card-head"><span>✦ CANOPY HEALTH</span><small>PROCEDURAL DEMO</small></div><div id="cmd-health-matrix" class="cmd-heatmap" role="img" aria-label="Illustrative canopy tiles, not measured NDVI"></div><div class="cmd-heat-legend"><span>LOWER EXPOSURE</span><span>MODERATE</span><span>HIGHER</span></div><p>Visualization is synthetic. NDVI satellite raster not connected.</p></article>
+            <article class="cmd-widget"><div class="cmd-card-head"><span>♨ THERMAL OVERLAY</span><small>NOT ECOSTRESS DATA</small></div><div class="cmd-thermal"><div class="cmd-thermal-map" id="cmd-thermal-map"></div><div class="cmd-thermal-key"><span>WARM</span><span>COOL</span></div></div><p>Illustrative surface gradient; no satellite temperature readings.</p></article>
+            <article class="cmd-widget"><div class="cmd-card-head"><span>⬡ FIELD BOUNDARY</span><small>GeoJSON</small></div><svg class="cmd-boundary" id="cmd-boundary" viewBox="0 0 300 134" role="img" aria-label="User field polygon preview or illustrative placeholder outline"><defs><pattern id="cmd-grid" width="18" height="18" patternUnits="userSpaceOnUse"><path d="M18 0H0V18" stroke="#06414e" stroke-width=".8" fill="none" /></pattern></defs><rect width="300" height="134" fill="#051b2c" /><rect width="300" height="134" fill="url(#cmd-grid)"/><path id="cmd-boundary-shape" d="M35 102L49 45L123 27L257 58L239 111L127 119Z" fill="#00ff661a" stroke="#00ff66" stroke-width="2.5"/></svg><div class="cmd-boundary-footer"><span id="cmd-boundary-status">ILLUSTRATIVE SHAPE</span><button type="button" data-go="farm">EDIT FIELD ↗</button></div><p id="cmd-boundary-info">The displayed shape is a placeholder until GeoJSON is entered.</p></article>
+          </aside>
+        </div>
+        <div class="cmd-control-ribbon"><div class="cmd-control-ribbon-title"><span>◇ ULTRA VISUALIZATION ENGINE</span><small>SOFTWARE 3D · SIMULATED SCENE</small></div><label class="cmd-quality-control">GRAPHICS <select id="cmd-quality" aria-label="Rendering quality"><option value="ultra" selected>✦ Ultra</option><option value="boost">⚡ FPS Boost</option><option value="high">High</option><option value="auto">Balanced</option><option value="eco">Eco</option></select></label><label class="cmd-check"><input id="cmd-postfx" type="checkbox" checked /> CINEMATIC FX</label><label> SUN <input type="range" id="cmd-sun" min="5" max="85" value="55" aria-label="Illustrative sun angle" /><output id="cmd-sun-value">55°</output></label><span class="cmd-render-stats" id="cmd-render-stats" role="status" aria-live="off">Measuring renderer…</span><label>SCENE <select id="cmd-overlay"><option value="health">Crop exposure</option><option value="thermal">Thermal (synthetic)</option><option value="canopy">Canopy (synthetic)</option><option value="irrigation">Irrigation channels</option><option value="topography">Elevation</option></select></label><label>CLIMATE TEST <select id="cmd-weather"><option value="normal">Reference</option><option value="drought">Flash drought (hypothetical)</option><option value="surge">Heavy rain surge (hypothetical)</option></select></label><label>LIGHT <select id="cmd-light"><option value="day">Day</option><option value="night">Night</option></select></label><label class="cmd-blend-control">3D BLEND <input id="cmd-blend" type="range" min="0" max="100" value="87" aria-label="3D visualization opacity" /><output id="cmd-blend-value">87%</output></label><button id="cmd-nasa-fetch" type="button">◎ FETCH NASA POWER</button><button type="button" class="cmd-precision-cta" data-go="evidence">◈ NASA PRECISION LAB ↗</button><button type="button" data-go="rover">ADVANCED 3D LAB ↗</button></div>
+        <div class="cmd-bottom-grid">
+          <article class="cmd-widget"><div class="cmd-card-head"><span>⌁ ROVER TELEMETRY</span><small>SIMULATED API</small></div><div class="cmd-readings"><div>Waypoint <b id="cmd-tel-waypoint">BASE</b></div><div>Relative soil moisture <b id="cmd-tel-moisture">—</b></div><div>Temperature <b id="cmd-tel-temp">—</b></div><div>Humidity <b id="cmd-tel-humidity">—</b></div></div></article>
+          <article class="cmd-widget"><div class="cmd-card-head"><span>☀ NASA CLIMATE CONTEXT</span><small id="cmd-climate-tag">NOT LINKED</small></div><div class="cmd-readings"><div>Precipitation <b id="cmd-climate-rain">—</b></div><div>Temperature <b id="cmd-climate-temp">—</b></div><div>Period <b id="cmd-climate-year">—</b></div><div>Source <b id="cmd-climate-source">NO DATA</b></div></div></article>
+          <article class="cmd-widget"><div class="cmd-card-head"><span>◈ SOIL PROFILE</span><small>FARMER ENTERED</small></div><div class="cmd-readings"><div>Texture <b id="cmd-soil-texture">Unknown</b></div><div>Soil pH <b id="cmd-soil-ph">—</b></div><div>Organic matter <b id="cmd-soil-organic">—</b></div><div>Irrigation <b id="cmd-soil-irrigation">—</b></div></div></article>
+          <article class="cmd-widget"><div class="cmd-card-head"><span>∿ MOISTURE TRACE</span><small>SYNTHETIC</small></div><canvas id="cmd-moisture-chart" height="112" width="300" role="img" aria-label="Scrolling chart of simulated rover soil-moisture values"></canvas><div class="cmd-chart-caption">Relative moisture, % · simulated endpoint</div></article>
+          <article class="cmd-widget"><div class="cmd-card-head"><span>♒ IRRIGATION MATRIX</span><small>HYPOTHETICAL</small></div><label class="cmd-irrigation-label">Irrigation intensity <output id="cmd-irrigation-value">35%</output></label><input type="range" id="cmd-irrigation" min="0" max="100" value="35" /><label class="cmd-irrigation-label">Drainage <output id="cmd-drainage-value">35%</output></label><input type="range" id="cmd-drainage" min="0" max="100" value="35" /><p id="cmd-env-description">Scenario exposure model pending.</p></article>
+          <article class="cmd-widget"><div class="cmd-card-head"><span>♧ ROTATION ANALYSIS</span><small>UNVALIDATED SCORES</small></div><div id="cmd-scenario-list" class="cmd-scenario-list"><span>Loading comparison…</span></div><button type="button" class="cmd-see-more" data-go="rotations">EXPLAIN SCORING ↗</button></article>
+        </div>
+        <footer class="cmd-disclaimer">RESEARCH PROTOTYPE · Farm-only cinematic field backdrop is illustrative · NASA POWER values appear only when retrieved by the API · All rover, LiDAR, thermal, canopy and exposure values are simulated or hypothetical · No physical rover commands.</footer>
+      </section>
+      <section class="view" id="view-overview" aria-labelledby="overview-title">
+        <div class="page-heading"><div><span class="eyebrow">FIELD INTELLIGENCE PLATFORM / 01</span><h1 id="overview-title">Mission control<span class="accent-dot">.</span></h1><p>From Earth observations to practical, evidence-aware field decisions.</p></div><span class="date-pill">14–15 NOV 2026 <span>•</span> TEAM PLAN</span></div>
+        <div class="hero">
+          <div class="hero-copy"><span class="hero-kicker">✦ SPACE DATA. FIELD DECISIONS.</span><h2>Better rotations<br/>begin with <em>better context.</em></h2><p>Explore how NASA climate observations, farmer-reported soil conditions and transparent scenario comparisons work together for Botolan's farming communities.</p><button class="btn btn-bright" type="button" data-go="rotations">Explore rotation options <span>↗</span></button><button class="btn btn-muted" type="button" data-go="rover">▶ View animated rover</button><span class="hero-disclaimer">Prototype planning aid — not validated agronomic advice.</span></div>
+          <div class="hero-art" aria-hidden="true"><div class="globe globe-a"></div><div class="globe globe-b"></div><div class="planet"></div><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit-node node-a"></div><div class="orbit-node node-b"></div><div class="orbit-node node-c"></div><span class="orbit-tag">15.289° N · 120.024° E</span><span class="orbit-tag tag-bottom">BOTOLAN PILOT</span></div>
+        </div>
+        <div class="summary-grid">
+          <div class="summary-card"><div class="stat-head"><span class="stat-icon stat-green">◉</span><span class="light-meta">OBSERVATIONS</span></div><div class="stat-main" id="stat-data">Not connected</div><div class="stat-foot" id="stat-data-foot">Load NASA POWER historical data</div></div>
+          <div class="summary-card"><div class="stat-head"><span class="stat-icon stat-blue">▥</span><span class="light-meta">ROTATION OPTIONS</span></div><div class="stat-main">03 <span class="stat-text">scenarios</span></div><div class="stat-foot">Explainable, farmer-weighted scoring</div></div>
+          <div class="summary-card"><div class="stat-head"><span class="stat-icon stat-orange">⌖</span><span class="light-meta">PILOT LOCATION</span></div><div class="stat-main">Botolan <span class="stat-text">PH</span></div><div class="stat-foot" id="stat-coordinates">Municipal-center placeholder</div></div>
+        </div>
+        <div class="two-col">
+          <article class="panel"><div class="panel-head"><div><span class="eyebrow">01 / EARTH CONTEXT</span><h3>Climate snapshot</h3></div><span class="data-tag" id="climate-label">NO DATA</span></div><p class="panel-desc" id="climate-subtitle">Connect to NASA POWER, or load synthetic data for a clearly labeled UI rehearsal.</p><div class="chart-wrap" id="climate-chart"><div class="chart-empty">No observations loaded<br/><small>Fetch real NASA data to populate the chart.</small></div></div><div class="chart-legend"><span><i class="legend-rain"></i> Monthly precipitation (mm)</span><span><i class="legend-temp"></i> Mean temperature (°C)</span></div><div class="chart-actions"><button class="btn btn-primary" id="fetch-nasa" type="button">↗ Connect NASA POWER</button><button class="btn btn-muted" id="fetch-demo" type="button">Load synthetic demo</button></div><div class="inline-status" id="climate-status" role="status">Historical year: 2025 • Data are not field-level measurements.</div></article>
+          <article class="panel"><div class="panel-head"><div><span class="eyebrow">02 / FIELD CONTEXT</span><h3>Selected farm</h3></div><button class="text-btn" data-go="farm" type="button">Edit profile ↗</button></div><div class="field-map" id="field-map"><div class="map-grid"></div><div class="field-marker"><div class="marker-pulse"></div><div class="pin-dot"></div></div><span class="map-label">LOCATION PREVIEW</span><span class="map-corner">N ↑</span></div><div class="field-info"><div><span>FARM PROFILE</span><strong id="field-name">Botolan pilot farm</strong></div><div><span>AREA</span><strong id="field-area">1.00 ha</strong></div><div><span>IRRIGATION</span><strong id="field-irrigation">Limited</strong></div></div><div class="map-note" id="map-note">Point location only. No surveyed boundary has been supplied.</div></article>
+        </div>
+        <article class="panel quick-compare"><div class="panel-head"><div><span class="eyebrow">03 / DECISION SUPPORT</span><h3>Rotation comparison</h3></div><button class="text-btn" data-go="rotations" type="button">See analysis ↗</button></div><p class="panel-desc">Prototype heuristic scores, not measured crop suitability, crop yield or projected profit.</p><div class="quick-scenarios" id="overview-scenarios"><div class="loading-placeholder">Preparing scenarios…</div></div></article>
+      </section>
+      <section class="view" id="view-farm" aria-labelledby="farm-title">
+        <div class="page-heading"><div><span class="eyebrow">FIELD INTELLIGENCE PLATFORM / 02</span><h1 id="farm-title">Farm profile<span class="accent-dot">.</span></h1><p>Record farmer-entered field conditions and decision priorities.</p></div><span class="date-pill">INPUTS ARE USER-REPORTED</span></div>
+        <form id="farm-form" class="farm-layout">
+          <div class="panel form-panel"><div class="panel-head"><div><span class="eyebrow">PROFILE DETAILS</span><h3>Farm & location</h3></div></div><div class="form-grid"><label class="form-field span2">Farm name<input id="farm-name" required maxlength="90" value="Botolan pilot farm" /></label><label class="form-field">Latitude (°)<input id="farm-lat" required type="number" step="any" min="-90" max="90" value="15.289" /></label><label class="form-field">Longitude (°)<input id="farm-lon" required type="number" step="any" min="-180" max="180" value="120.024" /></label><label class="form-field">Field area (ha)<input id="farm-area" type="number" required min="0.0001" max="100000" step="any" value="1" /></label><label class="form-field">Current crop<input id="farm-crop" required value="Rice" maxlength="70" /></label><label class="form-field span2">Illustrative season start month<select id="farm-start-month"><option value="1">January</option><option value="2">February</option><option value="3">March</option><option value="4">April</option><option value="5">May</option><option value="6" selected>June</option><option value="7">July</option><option value="8">August</option><option value="9">September</option><option value="10">October</option><option value="11">November</option><option value="12">December</option></select></label></div><p class="helper">Starting coordinates represent an approximate town-center reference, not a verified agricultural plot. Replace with permitted farm coordinates.</p></div>
+          <div class="panel form-panel"><div class="panel-head"><div><span class="eyebrow">SOIL & WATER</span><h3>Local observations</h3></div></div><div class="form-grid"><label class="form-field">Soil texture<select id="farm-texture"><option value="unknown">Not known</option><option value="sandy">Sandy</option><option value="loamy">Loamy</option><option value="clayey">Clayey</option></select></label><label class="form-field">Irrigation access<select id="farm-irrigation"><option value="none">None</option><option value="limited" selected>Limited</option><option value="reliable">Reliable</option></select></label><label class="form-field">Soil pH (optional)<input type="number" min="0" max="14" step="0.1" id="farm-ph" placeholder="Not measured" /></label><label class="form-field">Organic matter % (optional)<input type="number" min="0" max="100" step="0.1" id="farm-om" placeholder="Not measured" /></label><label class="form-field span2">Evidence type<select id="farm-source"><option value="farmer_entered" selected>Farmer-entered / unverified</option><option value="field_measured">Field measured (with instruments)</option><option value="laboratory">Laboratory soil report</option></select></label></div><p class="helper">These values are recorded but pH and organic matter are not scored until local crop requirements are verified. Never infer nitrogen, phosphorus or potassium from a pH sensor.</p></div>
+          <div class="panel form-panel priority-panel"><div class="panel-head"><div><span class="eyebrow">FARMER-CENTERED MODEL</span><h3>What matters most?</h3></div><span class="badge-small">0–10 importance</span></div><div id="priority-list" class="priority-list"></div><div class="form-footer"><button class="btn btn-primary" type="submit">Update farm & compare ↗</button><span class="save-hint" id="save-hint">Saved locally in this browser.</span></div></div>
+          <div class="panel form-panel"><div class="panel-head"><div><span class="eyebrow">OPTIONAL GIS INPUT</span><h3>Field boundary</h3></div></div><label class="form-field">GeoJSON Polygon geometry or Feature<textarea id="farm-geojson" rows="7" spellcheck="false" placeholder='{"type":"Polygon","coordinates":[[[120.02,15.28],[120.021,15.28],[120.021,15.281],[120.02,15.281],[120.02,15.28]]]}'></textarea></label><p class="helper">Enter a permitted, measured polygon to visualize its outline. If blank, only a point marker is shown; the preview is not a satellite basemap or a cadastral survey.</p><div class="boundary-status" id="boundary-status">No polygon supplied.</div></div>
+        </form>
+      </section>
+      <section class="view" id="view-rotations" aria-labelledby="rotation-title"><div class="page-heading"><div><span class="eyebrow">FIELD INTELLIGENCE PLATFORM / 03</span><h1 id="rotation-title">Rotation studio<span class="accent-dot">.</span></h1><p>Three transparent options and historical rainfall screening. Test farmer priorities and seasonal context.</p></div><button class="btn btn-primary" type="button" id="recompare">↻ Recalculate scenarios</button></div><div class="warning-banner"><strong>Experimental planning scores.</strong> The crop sequences and point values are illustrative assumptions, not validated crop requirements. Historical rainfall may adjust only the experimental water-exposure proxy; it cannot predict suitability, yield or profit.</div><div id="season-panel" class="panel season-panel" aria-live="polite"><div class="season-heading"><div><span class="eyebrow">NASA → FARM → SEASON</span><h3>Historical seasonal evidence</h3></div><span class="data-tag" id="season-data-badge">NOT LINKED</span></div><div id="season-info" class="season-info">Select a farm and connect NASA POWER historical data to see how seasonal precipitation can change the prototype comparison.</div><div class="season-actions"><button type="button" id="season-nasa" class="btn btn-primary">↗ Link NASA climate to scores</button><button type="button" id="season-demo" class="btn btn-muted">Rehearse with synthetic data</button><button type="button" class="text-btn" data-go="farm">Change planning month ↗</button></div><p class="helper">This is an exploratory historical-water-exposure screen, not a validated agronomic recommendation. The date window is based on the selected historical year, not a future forecast.</p></div><div class="ranking-layout"><div class="scenario-stack" id="rotation-cards"><div class="loading-placeholder">Preparing comparison…</div></div><aside class="analysis-aside"><div class="panel"><span class="eyebrow">WEIGHTING MODEL</span><h3>Farmer priorities</h3><div id="weight-breakdown"></div><button type="button" class="text-btn" data-go="farm">Adjust priorities ↗</button></div><div class="panel"><span class="eyebrow">MISSING EVIDENCE</span><h3>Before field use</h3><ul id="evidence-gaps" class="evidence-list"></ul></div></aside></div></section>
+      <section class="view" id="view-rover" aria-labelledby="rover-title">
+        <div class="page-heading rover-title-bar">
+          <div><span class="eyebrow">AGRIORBIT / PHASE 8 / HOLOGRAPHIC INTELLIGENCE</span><h1 id="rover-title">Agro Sentinel <span class="accent-dot">Hologram.</span></h1><p>Interactive 3D concept rover · Diagnostics · Navigation route simulation · Telemetry provenance</p></div>
+          <span class="rover-demo-badge">● SIMULATOR ONLY · NO PHYSICAL CONNECTION</span>
+        </div>
+        <div class="mission-warning" role="note"><strong>Engineering concept, not verified CAD or live navigation.</strong> Farm geometry, rover dimensions, sensor outputs, LIDAR grid, temperature heatmaps, NDVI and positions below are illustrative/synthetic. Physical rover autonomy is disabled.</div>
+        <div class="mission-headline-strip">
+          <span>MISSION <strong id="mission-id">AGRO-SENTINEL-DEMO-ROUTE-V2</strong></span><span>FARM <strong id="mission-farm">BOTOLAN PILOT</strong></span><span>ROVER <strong>NOT CONNECTED</strong></span><span>3D ENGINE <strong id="holo-engine-status">INITIALIZING</strong></span>
+        </div>
+        <section class="hud-command" aria-label="Phase 5 display preferences">
+          <div class="hud-command-heading"><span class="hud-command-pulse" aria-hidden="true"></span><strong>AGRIORBIT / VISUALIZATION CORE</strong><small>CANVAS ENGINE · OFFLINE CAPABLE · NO REAL SENSOR CONTROL</small></div>
+          <div class="hud-command-actions">
+            <label class="hud-switch"><input id="hud-crt" type="checkbox" /> CRT scanlines</label>
+            <label class="hud-switch"><input id="hud-bloom" type="checkbox" checked /> Marker glow</label>
+            <label class="hud-select">Render <select id="hud-quality"><option value="auto">Balanced</option><option value="high">High</option><option value="ultra">✦ Ultra</option><option value="boost">⚡ FPS Boost</option><option value="eco">Eco</option></select></label>
+            <button id="hud-ar" type="button" class="hud-command-button">◉ Camera scout view</button>
+          </div>
+          <div id="hud-effects-status" role="status" aria-live="polite" class="hud-effects-status">Local synthetic canvas · Thermal raster NOT connected</div>
+        </section>
+        <div class="rover-mission-layout">
+          <div class="hologram-column">
+            <div class="holo-viewport-panel">
+              <div class="holo-topbar"><span class="holo-signal"><span class="holo-pulse"></span> AGRIORBIT / HOLOGRAPHIC TELEMETRY LAB</span><span id="holo-layer-label">STRUCTURAL · CONCEPT</span></div>
+              <div class="mission-env-controls" aria-label="Synthetic field environment controls">
+                <label>WEATHER HYPOTHESIS <select id="env-weather"><option value="normal">Reference</option><option value="drought">Flash drought −45%</option><option value="surge">Rainfall surge +65%</option></select></label>
+                <label>3D DATA OVERLAY <select id="env-overlay"><option value="health">Exposure index</option><option value="thermal">Synthetic thermal</option><option value="irrigation">Irrigation grid</option><option value="topography">Terrain relief</option><option value="canopy">Synthetic canopy density</option></select></label>
+                <label>LIGHTING <select id="env-light"><option value="day">Daytime</option><option value="night">Night</option></select></label>
+              </div>
+              <div class="holo-canvas-wrap" id="holo-canvas-wrap">
+                <canvas id="holo-viewport" width="1100" height="630" aria-label="Interactive 3D rendering of a proposed Agro Sentinel rover traversing an illustrative farm grid; all positions and readings simulated" role="img"></canvas>
+                <div id="holo-fallback" class="holo-fallback" hidden><strong>3D renderer unavailable</strong><p>This browser cannot start the local Canvas 3D renderer. The simulation API and telemetry readouts remain accessible.</p></div>
+                <div id="hud-scanlines" class="hud-scanlines" aria-hidden="true"></div>
+                <div class="holo-corner-label corner-top-left">SIMULATED TOPOLOGY / NOT SURVEYED</div>
+                <div class="holo-corner-label corner-bottom-left">ROUTE COORDINATES: NORMALIZED · NOT GPS</div>
+                <div class="holo-radar"><span>3D FIELD / SYNTHETIC</span><b id="holo-camera-angle">ORBIT CAM</b></div>
+                <div class="holo-beam-label" aria-hidden="true">SATELLITE SWEEP / SIMULATED</div>
+                <div class="holo-layer-pills"><span>◇ FIELD GRID</span><span>◈ 3D CHASSIS</span><span>⌖ WAYPOINTS</span></div>
+              </div>
+              <div class="holo-toolbar">
+                <div class="holo-layers" role="group" aria-label="Hologram layer selection">
+                  <button type="button" class="holo-tab active" data-holo-layer="structural" aria-pressed="true"><span class="holo-tab-num">01</span> Structural</button>
+                  <button type="button" class="holo-tab" data-holo-layer="diagnostic" aria-pressed="false"><span class="holo-tab-num">02</span> Diagnostics</button>
+                  <button type="button" class="holo-tab" data-holo-layer="navigation" aria-pressed="false"><span class="holo-tab-num">03</span> LIDAR + Route</button>
+                </div>
+                <div class="holo-camera-actions"><button type="button" class="holo-icon-button" id="holo-reset" title="Reset 3D camera">⌖ Reset</button><button type="button" class="holo-icon-button" id="holo-zoom-in" title="Zoom in">+</button><button type="button" class="holo-icon-button" id="holo-zoom-out" title="Zoom out">−</button></div>
+              </div>
+              <div class="hud-sun-control"><label for="hud-sun">SIMULATED SUN ANGLE <output id="hud-sun-value">55°</output></label><input id="hud-sun" type="range" min="5" max="85" value="55" step="5" /><span>Lighting is illustrative, NOT calculated from satellite ephemerides or GPS solar geometry.</span></div>
+              <div class="mission-animation-deck" aria-label="Animated mission scene controls">
+                <div class="mission-animation-deck-head"><div><strong>◈ ANIMATED MISSION DIRECTOR</strong><span>Real canvas animation · No physical rover controls</span></div><button type="button" id="holo-cinematic" class="cinematic-launch">✦ PLAY CINEMATIC TOUR</button></div>
+                <div class="holo-animation-indicator" role="status" aria-live="off"><span class="holo-animation-led"></span><strong id="holo-animation-state">ANIMATED SCENE</strong><small id="holo-render-fps">FPS —</small></div>
+                <div class="mission-animation-deck-controls">
+                  <label class="animation-select">PLAYBACK SPEED <select id="holo-speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option><option value="3">3×</option></select></label>
+                  <label class="animation-toggle"><input id="holo-loop" type="checkbox" /> Loop rover route</label>
+                  <label class="animation-toggle"><input id="holo-ambient" type="checkbox" checked /> Animated environment</label>
+                  <label class="animation-toggle"><input id="holo-orbit" type="checkbox" /> Auto-orbit camera</label>
+                </div>
+                <div class="mission-animation-sequence"><span id="holo-stage">STANDBY · 4 WAYPOINT DEMO</span><span id="holo-animation-guide">Cyan scanning effects and moving rover are simulated.</span></div>
+              </div>
+              <div class="holo-playback">
+                <button type="button" class="btn btn-primary" id="holo-play">▶ Start simulated mission</button>
+                <button type="button" class="btn btn-muted" id="holo-restart">↻ Reset route</button>
+                <label for="holo-timeline">Mission progress <output id="holo-progress-text">0%</output></label>
+                <input id="holo-timeline" type="range" min="0" max="100" step="1" value="0" aria-label="Scrub the simulated rover route"/>
+              </div>
+            </div>
+            <div class="env-response-panel" aria-live="polite">
+                <div class="env-management"><label>IRRIGATION INTENSITY <strong id="env-irrigation-value">35%</strong><input id="env-irrigation" type="range" min="0" max="100" value="35"></label><label>DRAINAGE INTENSITY <strong id="env-drainage-value">35%</strong><input id="env-drainage" type="range" min="0" max="100" value="35"></label></div>
+                <div id="env-index" class="env-index"><b>ENVIRONMENT MODEL</b><span>Loading hypothetical scenario...</span></div>
+                <div id="env-zones" class="env-zones" aria-label="Hypothetical zone exposure indices"></div>
+                <p class="env-caption">Counterfactuals only • No measured water quantities, forecast rainfall, observed crop health, or irrigator actuation.</p>
+              </div>
+            <div class="mission-information-row">
+              <div class="mission-subpanel"><div class="mission-mini-header"><strong>DATA SOURCES</strong><span>PROVENANCE LOCK</span></div><div class="mission-source-grid"><div><span class="source-dot synthetic-dot"></span> Synthetic rover / environment <b>DEMO</b></div><div><span class="source-dot nasa-dot"></span> NASA POWER climate <b id="holo-nasa-status">NOT LOADED</b></div><div><span class="source-dot sensor-dot"></span> Hardware sensors <b>NOT CONNECTED</b></div><div><span class="source-dot concept-dot"></span> Hardware/CAD model <b>CONCEPT</b></div></div></div>
+              <div class="mission-subpanel"><div class="mission-mini-header"><strong>SCENARIO OVERLAY</strong><span>EXPERIMENTAL SCORING</span></div><div class="mission-scenarios" role="group" aria-label="Farm scenario visualization"><button type="button" data-holo-scenario="A">A · Baseline</button><button type="button" data-holo-scenario="B" class="active">B · Legume</button><button type="button" data-holo-scenario="C">C · Diverse</button></div><p class="mission-small" id="holo-scenario-note">Farm zones are design colors only, not predicted yields or suitability.</p></div>
+            </div>
+          </div>
+          <aside class="holo-data-sidebar" aria-label="Reorderable mission widgets">
+            <div class="holo-data-card" data-hud-widget="state"><div class="holo-card-head"><span>◉ MISSION STATE</span><span id="holo-link-status">SIMULATED</span></div><div class="holo-metric hero-metric"><div><small>ACTIVE WAYPOINT</small><strong id="holo-waypoint">BASE</strong></div><div><small>MISSION PHASE</small><strong id="holo-phase">Standby</strong></div></div><div class="holo-statgrid"><div><small>BATTERY</small><strong id="holo-battery">—</strong></div><div><small>SOLAR ASSIST</small><strong id="holo-solar">—</strong></div><div><small>SUSPENSION LOAD</small><strong id="holo-suspension">—</strong></div><div><small>STATUS</small><strong>CONCEPT</strong></div></div></div>
+            <div class="holo-data-card" data-hud-widget="sensors"><div class="holo-card-head"><span>♧ SENSOR PAYLOAD</span><span>PLANNED / DEMO</span></div><div class="holo-value-row"><span>Relative soil moisture</span><b id="moisture">—</b></div><div class="telemetry-bar"><span id="moisture-bar"></span></div><div class="holo-value-row"><span>Soil temperature</span><b id="soil-temp">—</b></div><div class="holo-value-row"><span>NDVI proxy*</span><b id="holo-ndvi">—</b></div><div class="holo-value-row"><span>Compaction proxy*</span><b id="holo-compaction">—</b></div><div class="holo-value-row"><span>CO₂ / Humidity</span><b id="holo-atmos">—</b></div><div class="holo-value-row"><span>Hyperspectral camera</span><b>PLANNED</b></div><button id="simulate" class="btn btn-muted wide" type="button">↻ Sample simulated readings</button></div>
+            <div class="holo-data-card" data-hud-widget="diagnostics"><div class="holo-card-head"><span>△ DIAGNOSTICS</span><span>TEST SIGNALS</span></div><div class="holo-value-row"><span>Wheel slip</span><b id="holo-slip">—</b></div><div class="holo-value-row"><span>Motor temperature</span><b id="holo-motor">—</b></div><div class="holo-value-row"><span>Optical dust</span><b id="holo-dust">—</b></div><div class="holo-value-row"><span>LIDAR grid</span><b>8×8 SYNTHETIC</b></div><div class="holo-value-row"><span>Route validation</span><b>NOT VERIFIED</b></div><div class="holo-value-row"><span>Nominal GPS context</span><b id="gps-reading">—</b></div><div class="holo-value-row"><span>Last simulation</span><b class="mission-time" id="telemetry-time">—</b></div></div>
+            <div class="holo-data-card" data-hud-widget="orbital"><div class="holo-card-head"><span>◎ ORBITAL DATA ADAPTERS</span><span>VERIFY BEFORE USE</span></div><div id="holo-earth-sources" class="holo-source-register">NASA POWER: fetch historical data in Mission Control. MODIS, Landsat and ECOSTRESS raster layers are NOT loaded.</div><div class="catalog-search"><label>NASA CMR metadata search <select id="earth-catalog-product"><option value="modis">MODIS NDVI (metadata)</option><option value="ecostress">ECOSTRESS ET (metadata)</option></select></label><button type="button" id="earth-catalog-fetch">Find real catalog records</button></div><div id="earth-catalog-results" class="earth-catalog-results" role="status">No catalog query yet. A record listing is not a processed image layer.</div></div>
+            <div class="holo-data-card" data-hud-widget="ingestion"><div class="holo-card-head"><span>◷ INGESTION LOG</span><span>UNVERIFIED</span></div><div id="holo-ingest-log" class="holo-ingest-log">No field-measured packets were authenticated. Use the secure telemetry endpoint and preserve calibration evidence.</div><button type="button" class="holo-refresh" id="holo-refresh">↻ Refresh stored samples</button><p class="mission-small">A declared measured packet is not proof of physical calibration or instrument accuracy.</p></div>
+            <div class="holo-data-card" data-hud-widget="feed"><div class="holo-card-head"><span>▦ DATA STITCHING STATUS</span><span>PROVENANCE</span></div>
+              <div class="hud-data-line"><b>Field boundary</b><span id="hud-boundary-status">POINT ONLY</span></div>
+              <svg id="hud-boundary-preview" viewBox="0 0 260 105" role="img" aria-label="Relative-shape preview of farmer-entered field polygon, not georeferenced to 3D terrain"><rect x="1" y="1" width="258" height="103" rx="8" fill="#091b2c" stroke="#157081"/><path d="M10 25H250M10 50H250M10 75H250M52 10V95M104 10V95M156 10V95M208 10V95" stroke="#174154" stroke-width="0.5"/><path id="hud-boundary-path" d="" fill="#00F0FF22" stroke="#00F0FF" stroke-width="2"/></svg>
+              <div class="hud-data-line"><b>NASA POWER</b><span id="hud-climate-status">NOT FETCHED</span></div>
+              <div class="hud-data-line"><b>Satellite rasters</b><span>NOT INGESTED</span></div>
+              <div class="hud-data-line"><b>LIDAR point cloud</b><span>NOT CONNECTED</span></div>
+              <p class="mission-small">Polygon preview preserves only user-entered relative geometry; not registered to procedural terrain. Thermal overlay and simulated LIDAR are NOT measured layers.</p>
+            </div>
+            <div class="holo-data-card" data-hud-widget="trace"><div class="holo-card-head"><span>⌁ LIVE DEMO TRACE</span><span>SIMULATED SAMPLES</span></div><canvas id="hud-trace" width="300" height="94" role="img" aria-label="Graph of sampled synthetic soil moisture readings"></canvas><div class="hud-trace-foot"><span>Relative moisture · synthetic</span><span id="hud-trace-count">0 points</span></div></div>
+          </aside>
+        </div>
+        <div class="hud-ar-panel" id="hud-ar-panel" hidden role="dialog" aria-label="Optional camera field scouting overlay" aria-modal="false">
+           <div class="hud-ar-heading"><strong>CAMERA SCOUT · DEMONSTRATION</strong><button id="hud-ar-close" type="button">✕ Close camera</button></div>
+           <div class="hud-ar-stage"><video id="hud-ar-video" autoplay muted playsinline></video><div class="hud-ar-crosshair" aria-hidden="true">⌖</div><div class="hud-ar-tag">NO SPATIAL REGISTRATION · SIMULATED FIELD MARKERS</div><div class="hud-ar-marker hud-ar-marker-one">P-01 · DEMO</div><div class="hud-ar-marker hud-ar-marker-two">CROP HEALTH NOT MEASURED</div></div>
+           <div id="hud-ar-message" role="status">Camera is not active. Camera permission is requested only after you select this feature.</div>
+        </div>
+        <div class="holo-science-note"><strong>Scientific boundaries:</strong> No surveyed terrain, verified rover geometry, true LIDAR scans, hyperspectral cube, camera-based NDVI, soil nutrient measurements, guaranteed battery life or autonomous commands. The server generates reproducible synthetic data for presentation and integration testing. Calibrated physical feeds require authenticated instrumentation and a separate validation process.</div>
+      </section>
+      <section class="view" id="view-evidence" aria-labelledby="evidence-title"><div class="page-heading"><div><span class="eyebrow">FIELD INTELLIGENCE PLATFORM / 05</span><h1 id="evidence-title">Evidence & science<span class="accent-dot">.</span></h1><p>Know what was measured, modeled, assumed, entered or simulated.</p></div><button id="download-report" class="btn btn-primary" type="button">↓ Export field report</button></div><div class="evidence-columns"><div class="panel"><span class="eyebrow">DATA PROVENANCE</span><h3>NASA POWER record</h3><div id="provenance" class="provenance"><p>No NASA response has been loaded yet. Climate values are not available.</p></div></div><div class="panel"><span class="eyebrow">SCORING TRANSPARENCY</span><h3>Method & limitations</h3><div id="method-details" class="method-details"></div></div></div><section class="precision-lab panel" id="precision-lab" aria-labelledby="precision-title">
+      <div class="precision-heading"><div><span class="eyebrow">PHASE 13 / NASA HISTORICAL INTELLIGENCE</span><h3 id="precision-title">◈ Precision Climate Lab</h3><p>Compare a complete three-month season with previous NASA POWER seasons. Unlike an annual-quarter proxy, this uses the <strong>same calendar window</strong> across years—including November–February correctly.</p></div><span class="precision-badge" id="precision-badge">NO DATA</span></div>
+      <div class="precision-controls">
+        <label>Target complete year <select id="precision-year"><option value="2025" selected>2025</option><option value="2024">2024</option><option value="2023">2023</option><option value="2022">2022</option></select></label>
+        <label>Previous seasons <select id="precision-years"><option value="5" selected>5-year baseline</option><option value="10">10-year baseline</option></select></label>
+        <button class="btn btn-primary" type="button" id="precision-fetch">↗ Retrieve real NASA benchmark</button>
+        <button class="btn btn-muted" type="button" id="precision-demo">Rehearse with synthetic</button>
+        <button class="btn btn-muted" type="button" id="precision-export" disabled>↓ Evidence JSON</button>
+      </div>
+      <div id="precision-status" class="precision-status" role="status" aria-live="polite">NASA benchmark has not been retrieved. Pilot coordinates are approximate until you supply an approved farm location.</div>
+      <div class="precision-kpis" aria-label="Historical rainfall comparison">
+        <div><small>Target season rainfall</small><strong id="precision-target">—</strong><span>mm · historical</span></div>
+        <div><small>Previous seasons' mean</small><strong id="precision-mean">—</strong><span>mm · same 3-month window</span></div>
+        <div><small>Difference from previous seasons</small><strong id="precision-anomaly">—</strong><span>descriptive, not a forecast</span></div>
+        <div><small>Valid reference seasons</small><strong id="precision-coverage">—</strong><span>95% monthly rain-data gate</span></div>
+      </div>
+      <div class="precision-grid"><div class="precision-history"><h4>Historical comparison — NASA gridded context</h4><div id="precision-season-table" class="precision-empty">No NASA data loaded. Benchmark values will appear here.</div></div>
+      <div class="precision-provenance"><h4>Scientific quality and provenance</h4><div id="precision-quality">A quality badge is not proof of plot-scale accuracy. NASA POWER grids represent regional environmental conditions, not individual soil samples.</div></div></div>
+      <div class="precision-boundary"><div><h4>Field boundary cross-check</h4><p>Approximate area check for farmer-entered GeoJSON only. Not a property survey or cadastral map.</p></div><button class="btn btn-muted" type="button" id="precision-boundary">Validate saved field boundary</button><div id="precision-boundary-result" role="status">No boundary checked.</div></div>
+      <p class="precision-disclaimer">NASA POWER is a historical gridded climate product. These comparisons do not predict crop yield, drought probability, evapotranspiration, NDVI, soil chemistry, or commercial returns. Scores in Rotation Studio remain unvalidated experimental heuristics. The rover and holographic farm visuals remain simulated.</p>
+    </section>
+
+    <section class="science21-lab panel" id="science21-lab" aria-labelledby="science21-title">
+      <div class="science21-heading"><div><span class="eyebrow">PHASE 21 / SCIENTIFIC CORE · SOURCE-GATED</span><h3 id="science21-title">◈ Real-World Evidence Studio</h3><p>Use NASA historical climate evidence to screen crop options, compare local gauge observations, process NASA HLS reflectance and examine a transparent water budget. This is <strong>NOT validated planting advice</strong>.</p></div><strong class="science21-state" id="science21-state">NOT ASSESSED</strong></div>
+      <div class="science21-tabs" role="tablist" aria-label="Scientific evidence tools">
+        <button type="button" data-science-panel="screen" class="active" aria-selected="true">01 Crop screening</button>
+        <button type="button" data-science-panel="validation" aria-selected="false">02 Gauge validation</button>
+        <button type="button" data-science-panel="water" aria-selected="false">03 Water budget</button>
+        <button type="button" data-science-panel="imagery" aria-selected="false">04 HLS imagery</button>
+      </div>
+      <div class="science21-body" id="science21-screen" role="tabpanel">
+        <p class="science21-caution">The old 0–100 rotation scores are unvalidated. This new screen uses actual same-season NASA history only when quality gates pass; it reports constraints and unknowns instead of replacing evidence with invented scores.</p>
+        <div class="science21-fields"><label>Crop rules (JSON; OPTIONAL, reviewer+source required for enforcement)<textarea id="science21-rules" spellcheck="false" rows="4">[]</textarea></label></div>
+        <div class="science21-actions"><button type="button" class="btn btn-primary" id="science21-run-nasa">Analyze with NASA POWER</button><button type="button" class="btn btn-muted" id="science21-run-demo">Synthetic rehearsal</button><button type="button" class="btn btn-muted" id="science21-export" disabled>Export evidence JSON</button></div>
+        <div class="science21-status" id="science21-screen-status" role="status">No screening performed. Save the farm profile and retrieve an evidence-gated comparison.</div>
+        <div id="science21-screen-results"></div>
+      </div>
+      <div class="science21-body" id="science21-validation" role="tabpanel" hidden>
+        <p>Enter your own rain-gauge readings (one <code>YYYY-MM-DD,mm</code> per line). The backend pairs them with server-retrieved NASA POWER daily records; a gauge label is not proof of calibration.</p>
+        <div class="science21-fields"><label>Gauge identifier<input id="science21-gauge-id" value="Pilot gauge — unverified" maxlength="120"></label><label><input type="checkbox" id="science21-gauge-calibrated"> Instrument calibration self-reported</label><label>Daily readings<textarea id="science21-gauge-data" rows="4" placeholder="2025-06-01,12.3&#10;2025-06-02,0"></textarea></label></div>
+        <div class="science21-actions"><button type="button" class="btn btn-primary" id="science21-gauge-run">Validate against NASA POWER</button><button type="button" class="btn btn-muted" id="science21-gauge-demo">Rehearse with synthetic rainfall</button></div>
+        <div class="science21-status" id="science21-gauge-results" role="status">Waiting for readings.</div>
+      </div>
+      <div class="science21-body" id="science21-water" role="tabpanel" hidden>
+        <p>Auditable soil-water accounting (<strong>user-supplied estimates only</strong>). A NASA rainfall grid is not automatically an effective-rainfall value or field-water balance.</p>
+        <div class="science21-water-fields">
+          <label>Period days<input type="number" id="sw-days" value="30" min="1" max="366"></label>
+          <label>Starting storage (mm)<input type="number" id="sw-start" value="75" min="0" step="any"></label>
+          <label>Soil capacity (mm)<input type="number" id="sw-capacity" value="120" min="0" step="any"></label>
+          <label>Gross rain (mm)<input type="number" id="sw-rain" value="60" min="0" step="any"></label>
+          <label>Irrigation (mm)<input type="number" id="sw-irrigation" value="20" min="0" step="any"></label>
+          <label>ETc (mm, user estimate)<input type="number" id="sw-etc" value="95" min="0" step="any"></label>
+          <label>Runoff (mm)<input type="number" id="sw-runoff" value="5" min="0" step="any"></label>
+          <label>Drainage (mm)<input type="number" id="sw-drainage" value="10" min="0" step="any"></label>
+        </div>
+        <div class="science21-actions"><button type="button" class="btn btn-primary" id="science21-water-run">Calculate illustrated water balance</button></div>
+        <div id="science21-water-results" class="science21-status" role="status">No water-budget calculation yet.</div>
+      </div>
+      <div class="science21-body" id="science21-imagery" role="tabpanel" hidden>
+        <p>NASA HLS v2.0: discover L30/S30 granules (metadata only). For real pixels, download matching red, NIR and Fmask Cloud Optimized GeoTIFFs with your <a href="https://urs.earthdata.nasa.gov/" target="_blank" rel="noopener noreferrer">Earthdata account</a> and run <code>scripts/hls_field_ndvi.py</code>. Imported analysis reports are user-provided until source granules are verified.</p>
+        <div class="science21-fields"><label>Dataset<select id="science21-product"><option value="hls_l30">NASA HLS Landsat L30 v2.0</option><option value="hls_s30">NASA HLS Sentinel S30 v2.0</option></select></label><label>Local output JSON<input id="science21-hls-file" type="file" accept=".json,application/json"></label></div>
+        <div class="science21-actions"><button type="button" class="btn btn-primary" id="science21-hls-find">Find NASA HLS granule metadata</button></div>
+        <div id="science21-hls-results" class="science21-status" role="status">No HLS raster has been ingested. Scene's green map is synthetic.</div>
+      </div>
+      <p class="science21-footer">Operational status: <strong>historical NASA data when retrieved</strong> · local gauge and crop rules self-reported · downloaded HLS bands optional · no verified crop yield, NPK, irrigation prescription or physical rover measurements. For research/education only.</p>
+    </section>
+    <div class="panel report-panel"><span class="eyebrow">DRAFT FARMER REPORT</span><h3>Current comparison summary</h3><div id="report-preview" class="report-preview"></div><div class="fineprint">The report is a decision-support discussion document only; no crop, input, investment or disaster outcome is guaranteed. Farm profile information is stored only in this browser unless exported.</div></div><div class="resources"><h3>Technical references</h3><a href="https://power.larc.nasa.gov/docs/services/api/temporal/daily/" target="_blank" rel="noopener noreferrer">NASA POWER daily API documentation ↗</a><a href="https://www.spaceappschallenge.org/2026/challenges/field-shift-adapting-farms-with-nasa-data/" target="_blank" rel="noopener noreferrer">Official Field Shift 2026 challenge ↗</a><a href="https://www.fao.org/family-farming/detail/en/c/1637590/" target="_blank" rel="noopener noreferrer">FAO • Soil health for paddy rice ↗</a><a href="https://www.pinoyrice.com/wp-content/uploads/palayamanan.pdf" target="_blank" rel="noopener noreferrer">DA-PhilRice • Palayamanan crop rotation guidance ↗</a><a href="https://www.isric.org/explore/soilgrids" target="_blank" rel="noopener noreferrer">ISRIC SoilGrids (future optional model layer) ↗</a></div></section>
+
+      <!-- Phase 22: Local, user-supplied PHIVOLCS-compatible map screening; no official government layers embedded. -->
+      <section class="view hazard22-view" id="view-hazards" aria-labelledby="hazard22-title">
+        <div class="page-heading"><div><span class="eyebrow">PHASE 23 / PINATUBO MAP RIGHTS + NASA HISTORICAL RECORDS</span><h1 id="hazard22-title">PHIVOLCS Hazard Intelligence<span class="accent-dot">.</span></h1><p>Overlay an authorized local hazard file with your farm boundary. Historical NASA rainfall is independent environmental context—not a lahar warning.</p></div><span class="h22-badge">UNVERIFIED GIS • NO DISASTER FORECAST</span></div>
+        <div class="h22-warning"><strong>Official data is not bundled or automatically downloaded.</strong> PHIVOLCS map access and vector reuse may require a Data User Agreement. HazardHunterPH is available for official location-based assessment. A no-overlap result cannot certify that a property is safe.</div>
+        <div class="h22-grid">
+          <article class="h22-panel"><span class="h22-kicker">01 / IMPORT & PROVENANCE</span><h3>Authorized hazard boundary</h3>
+            <label class="h22-field">Map GeoJSON file (local preview only)<input id="h22-file" type="file" accept=".geojson,.json,application/geo+json" /></label>
+            <label class="h22-field">Map source page (HTTPS)<input id="h22-source-url" type="url" placeholder="https://www.phivolcs.dost.gov.ph/volcano-hazard/" /></label>
+            <div class="h22-two"><label class="h22-field">Map title<input id="h22-title" value="Pinatubo lahar hazard map — user-provided" maxlength="180" /></label><label class="h22-field">Edition / revision<input id="h22-edition" value="Unspecified" maxlength="100" /></label></div>
+            <div class="h22-two"><label class="h22-field">Map date<input id="h22-map-date" type="date" /></label><label class="h22-field">Rights / permission status<select id="h22-permission"><option value="not_checked">Not checked</option><option value="local_review_only">Local review only</option><option value="permission_confirmed_by_user">Permission confirmed by user</option></select></label></div>
+            <label class="h22-field">Farm GeoJSON boundary<textarea id="h22-farm" rows="5" spellcheck="false" placeholder='Paste GeoJSON Polygon in longitude, latitude (WGS84)'></textarea></label>
+            <div class="h22-actions"><button id="h22-from-farm" class="btn btn-muted" type="button">Use saved farm boundary</button><button id="h22-demo" class="btn btn-muted" type="button">Load fictional demo</button></div>
+            <div class="h22-actions"><button id="h22-run" class="btn btn-primary" type="button">Screen mapped exposure</button><button id="h22-export" class="btn btn-muted" type="button" disabled>Export evidence JSON</button></div>
+            <div id="h22-status" class="h22-status" role="status">No hazard map loaded. Exposure is UNKNOWN.</div>
+          </article>
+          <article class="h22-panel h22-map-panel"><span class="h22-kicker">02 / FIELD BOUNDARY & CLIPPED HAZARD ZONES</span><h3>Indicative geospatial view</h3><div class="h22-map"><svg id="h22-svg" viewBox="0 0 620 360" role="img" aria-label="Farm boundary and user-supplied hazard intersections"><rect x="0" y="0" width="620" height="360" fill="#041a29"/><text x="310" y="180" text-anchor="middle" fill="#8ac7ce" font-size="14">Load a boundary to show geometry — no map is available</text></svg><div class="h22-map-label">WGS84 LON/LAT • LOCAL INDICATIVE VIEW • NOT A SURVEY</div></div><div id="h22-summary" class="h22-result">Awaiting assessment. Do not infer hazard absence.</div>
+          </article>
+        </div>
+        <div class="h22-grid h22-secondary"><article class="h22-panel"><span class="h22-kicker">03 / NASA EARTH CONTEXT</span><h3>Rainfall history — independent evidence</h3><p>Optionally retrieve NASA POWER same-season precipitation for the saved farm. Historical rainfall alone cannot predict whether a lahar will occur, or classify hazards at farm scale.</p><div class="h22-actions"><button id="h22-nasa" class="btn btn-muted" type="button">Retrieve NASA historical context</button><button id="h22-synthetic" class="btn btn-muted" type="button">Try synthetic rainfall example</button></div><div class="h22-status" id="h22-climate">NASA context not requested.</div></article>
+        <article class="h22-panel"><span class="h22-kicker">04 / PHILIPPINE REFERENCE SERVICES</span><h3>Maps, agreements & official advice</h3><div class="h22-links"><a href="https://www.phivolcs.dost.gov.ph/volcano-hazard/" target="_blank" rel="noopener noreferrer">PHIVOLCS volcano / Pinatubo hazard maps ↗</a><a href="https://maps.phivolcs.dost.gov.ph/" target="_blank" rel="noopener noreferrer">PHIVOLCS maps portal ↗</a><a href="https://hazardhunter.georisk.gov.ph/" target="_blank" rel="noopener noreferrer">HazardHunterPH official indicative assessment ↗</a><a href="https://gisweb.phivolcs.dost.gov.ph/gisweb/geomatics-services-request" target="_blank" rel="noopener noreferrer">Request official vector data / authorization ↗</a><a href="https://www.phivolcs.dost.gov.ph/2026-pinatubo-volcano-lahars-and-related-flooding/" target="_blank" rel="noopener noreferrer">2026 Pinatubo lahars publication ↗</a></div><p class="h22-footnote">To use a downloaded PHIVOLCS KMZ locally, convert it using <code>scripts/convert_hazard_kmz.py</code>, then import the GeoJSON here. Do not publish agency source layers without checking the applicable permission.</p></article></div>
+        <div class="p23-head"><span>PHASE 23 · REAL EVIDENCE PIPELINE</span><h2>Official map rights & real NASA observations</h2><p>Permission is issued by PHIVOLCS, not this software. NASA records are downloaded from NASA POWER on request and audited before display.</p></div>
+        <div class="p23-grid">
+          <article class="h22-panel p23-panel">
+            <span class="h22-kicker">05 / OFFICIAL PINATUBO DATA USE</span><h3>Hazard-layer permission review</h3>
+            <p>A map title or download does not establish redistribution rights. This workspace records a <b>user declaration only</b>; it cannot verify an agency agreement.</p>
+            <label class="h22-field">Intended use <select id="p23-purpose"><option value="private_local_preview">Private local preview</option><option value="team_internal_analysis">Internal team research</option><option value="public_redistribution">Public web map / redistribution</option></select></label>
+            <label class="h22-field">Agreement / request reference (optional)<input id="p23-agreement" type="text" placeholder="Official reference if already granted" maxlength="160" /></label>
+            <label class="p23-check"><input id="p23-signed" type="checkbox" /> I have a signed applicable agreement (self-attestation)</label>
+            <label class="p23-check"><input id="p23-public" type="checkbox" /> Agreement explicitly permits public redistribution (self-attestation)</label>
+            <button id="p23-check-rights" class="btn btn-primary" type="button">Review permission status</button>
+            <div class="p23-output" id="p23-rights-result" role="status">External authorization not yet verified. Private local inspection only.</div>
+            <a class="p23-link" href="https://gisweb.phivolcs.dost.gov.ph/gisweb/geomatics-services-request" target="_blank" rel="noopener noreferrer">Open official PHIVOLCS GIS request process ↗</a>
+          </article>
+          <article class="h22-panel p23-panel">
+            <span class="h22-kicker">06 / NASA POWER LIVE HISTORICAL DOWNLOAD</span><h3>Daily point observations · original provenance</h3>
+            <p>Retrieve actual historical NASA POWER data, not synthetic samples. The coordinates are an <b>illustrative Botolan-area point</b> until a permitted farm is saved.</p>
+            <div class="p23-three"><label class="h22-field">Latitude<input id="p23-lat" type="number" min="-90" max="90" step="0.00001" value="15.28900" /></label><label class="h22-field">Longitude<input id="p23-lon" type="number" min="-180" max="180" step="0.00001" value="120.02400" /></label><label class="h22-field">Year<input id="p23-year" type="number" min="1981" max="2025" value="2025" /></label></div>
+            <div class="h22-actions"><button id="p23-use-farm" class="btn btn-muted" type="button">Use saved farm coordinates</button><button id="p23-fetch-nasa" class="btn btn-primary" type="button">Fetch genuine NASA POWER</button><button id="p23-export-nasa" class="btn btn-muted" type="button" disabled>Export NASA evidence</button></div>
+            <div class="p23-output" id="p23-nasa-result" role="status">Not requested. No NASA observations have been verified in this session.</div>
+            <div class="p23-table-wrap"><table class="p23-table" aria-label="Historical NASA monthly observations"><thead><tr><th>Month</th><th>Rain (mm)</th><th>Temp (°C)</th><th>Rain coverage</th></tr></thead><tbody id="p23-months"><tr><td colspan="4">Fetch NASA observations to display records.</td></tr></tbody></table></div>
+            <p class="h22-footnote">Daily API metadata includes original URL, retrieval time, SHA-256 integrity digest, and completeness. NASA POWER is regional historical climate context, not farm rainfall measurement or a lahar forecast.</p>
+          </article>
+        </div>
+        <p class="h22-footnote">No live PHIVOLCS API authentication, map licensing verification, real-time lahar prediction, or legal safety certificate is provided. This hazard overlay is separate from crop suitability screening and cannot authorize farm or rover operations.</p>
+      </section>
+      <!-- Phase 14: criteria and eligibility adapted from user-provided 2026 NASA Space Apps Judging & Awards Guide. -->
+      <section class="view spaceapps-view" id="view-guidelines" aria-labelledby="spaceapps-title">
+        <div class="page-heading spaceapps-page-head">
+          <div><span class="eyebrow">2026 NASA SPACE APPS / JUDGING & AWARDS GUIDE • 13 NOV 2026</span><h1 id="spaceapps-title">NASA Guidelines <span class="accent-dot">.</span></h1><p>Turn the <strong>Field Shift</strong> prototype into a clear, evidence-led project story. These checks are a planning aid — not official NASA approval.</p></div>
+          <button type="button" id="sa-export" class="btn btn-primary">↓ Export self-audit JSON</button>
+        </div>
+        <div class="sa-attention" role="note"><strong>Portfolio baseline ≠ submitted hackathon work.</strong> Disclose previously developed assets, cite all external resources, and verify current terms with your event lead. This guide does not determine whether existing code can be reused. The app neither posts a submission nor certifies Global Judging eligibility.</div>
+        <div class="sa-meta-bar"><span><b>CHALLENGE</b> Field Shift: Adapting Farms with NASA Data</span><span><b>DEMO</b> ≤ 7 slides OR ≤ 30 seconds of video</span><span><b>DEADLINE</b> Nov 15, 11:59 PM (applicable local time)</span></div>
+        <div class="sa-hero-grid">
+          <article class="sa-surface"><div class="sa-eyebrow">01 / PROTOTYPE EVIDENCE</div><h3>Is NASA data doing meaningful work?</h3><p class="sa-muted">Source checks are derived from the current browser session; they do not establish external scientific validation.</p><div id="sa-evidence-indicators" class="sa-evidence-list" aria-live="polite">Inspecting current farm and climate evidence…</div><div class="sa-action-row"><button class="btn btn-muted" type="button" id="sa-refresh">↻ Refresh evidence</button><button type="button" class="btn btn-muted" data-go="evidence">Open NASA Precision Lab ↗</button></div></article>
+          <article class="sa-surface"><div class="sa-eyebrow">02 / JUDGE RUBRIC</div><h3>Five criteria, 1–5 each</h3><p class="sa-muted">Use this for team rehearsal only. Scores and notes are not supplied by NASA judges.</p><div id="sa-score-summary" class="sa-big-score">— <span>/ 25 team-estimated</span></div><div id="sa-score-bars" class="sa-score-bars"></div></article>
+        </div>
+        <article class="sa-surface sa-criteria"><div class="sa-eyebrow">JUDGING FOCUS / PAGES 5–7</div><h3>Make every criterion defensible</h3><div class="sa-rubric-grid" id="sa-rubric"></div></article>
+        <div class="sa-mid-grid">
+          <article class="sa-surface"><div class="sa-eyebrow">GLOBAL JUDGING / ELIGIBILITY CHECKLIST</div><h3>Self-reported submission audit</h3><p class="sa-muted">Check only what you've verified. Some structural constraints are calculated; identities, registration, permissions and source completeness are never automatically certified.</p>
+            <div class="sa-formgrid"><label>Event type<select id="sa-event"><option value="local">Local Event</option><option value="universal">Universal Event</option></select></label><label>Registered team size<input id="sa-team" type="number" min="0" max="50" value="6"></label><label>Demo format<select id="sa-format"><option value="none">Not prepared</option><option value="slides">Slides</option><option value="video">Video</option></select></label><label>Slide count<input id="sa-slides" type="number" min="0" max="100" value="0"></label><label>Demo video seconds<input id="sa-seconds" type="number" min="0" max="600" step="0.1" value="0"></label><label>Video spoken in English<select id="sa-spoken"><option value="true">Yes</option><option value="false">No</option></select></label></div>
+            <div id="sa-checkboxes" class="sa-checklist"></div>
+            <label class="sa-label">External resources / credits — one source per line<textarea rows="5" id="sa-references" spellcheck="false" placeholder="NASA POWER | https://power.larc.nasa.gov/
+NASA Space Apps Challenge | https://www.spaceappschallenge.org/2026/
+Your own imagery, code, datasets and their provenance"></textarea></label>
+            <div class="sa-action-row"><button type="button" class="btn btn-primary" id="sa-run-audit">↻ Check self-reported rules</button><button class="btn btn-muted" type="button" id="sa-clear">Reset checks</button></div>
+            <div id="sa-audit-summary" class="sa-audit-summary" role="status" aria-live="polite">Not audited. Mark your confirmations, then run the self-check.</div><div id="sa-audit-results" class="sa-audit-results"></div>
+          </article>
+          <article class="sa-surface"><div class="sa-eyebrow">PRESENTATION / PAGE 3</div><h3>Choose one qualifying demo</h3>
+            <div class="sa-demo-tabs"><button type="button" id="sa-show-video" class="sa-mode active" aria-pressed="true">30-second video</button><button type="button" id="sa-show-slides" class="sa-mode" aria-pressed="false">7-slide story</button></div>
+            <div id="sa-video-plan"><p class="sa-muted">Suggested demo storyboard; rehearse and trim to the guide's 30-second maximum.</p><ol class="sa-story"><li><span>0–5 s</span> Problem: climate uncertainty in Botolan</li><li><span>5–11 s</span> NASA POWER source and historical window</li><li><span>11–19 s</span> Farm soil inputs and three rotations</li><li><span>19–26 s</span> Comparison, evidence and uncertainty</li><li><span>26–30 s</span> Farmer value and limitations</li></ol><p class="sa-quote">“AgriORBIT brings historical NASA climate information together with farmer-entered soil data and priorities. For our Botolan pilot, it compares three experimental crop rotations and explains uncertainty. Our holographic rover is a simulation; the field recommendation engine still requires local validation. We aim to help growers explore climate-resilient options using understandable, traceable evidence.”</p><div class="sa-timer"><strong id="sa-timer-text">00:00 / 00:30</strong><div class="sa-timer-progress"><span id="sa-timer-fill"></span></div><button class="btn btn-primary" id="sa-timer-start" type="button">▶ Rehearse 30 seconds</button><button class="btn btn-muted" id="sa-timer-reset" type="button">Reset</button></div></div>
+            <div id="sa-slides-plan" hidden><p class="sa-muted">Maximum seven slides, including the title and introduction slides. This is a suggested structure, not a NASA-prescribed outline.</p><ol class="sa-story"><li>Title & problem</li><li>Botolan farmer and field context</li><li>NASA observations: variable, date, coordinates and source</li><li>Local soil information and farmer priorities</li><li>Three rotation scenarios and transparent comparison</li><li>Evidence, uncertainty and physical-rover simulation disclaimer</li><li>Potential impact, roadmap and references</li></ol></div>
+            <div class="sa-note">Your official event may also set a separate local presentation schedule. The Global Judging demo limit above comes from the uploaded 2026 Judging & Awards Guide.</div>
+          </article>
+        </div>
+        <article class="sa-surface sa-footnotes"><div class="sa-eyebrow">SOURCES AND SCOPE</div><h3>Documentation & official links</h3><p>Source of requirements: <strong>NASA Space Apps 2026 Judging & Awards Guide, dated November 13, 2026</strong>, supplied by the team (pages 1, 3, 5–7, 11). NASA's separate Project Submission Guide and current Terms must be reviewed independently.</p><div class="sa-links"><a href="https://www.spaceappschallenge.org/2026/" target="_blank" rel="noopener noreferrer">Official NASA Space Apps 2026 ↗</a><a href="https://www.spaceappschallenge.org/2026/challenges/field-shift-adapting-farms-with-nasa-data/" target="_blank" rel="noopener noreferrer">Field Shift challenge ↗</a><a href="https://power.larc.nasa.gov/docs/services/api/temporal/daily/" target="_blank" rel="noopener noreferrer">NASA POWER API ↗</a></div><p class="sa-muted">All information here is for a research prototype. Submitting externally requires your team's action on the official website. Global awards include Best Use of Science, Best Use of Data, Best Mission Concept, Art & Technology, and Local Impact (Guide p.11).</p></article>
+      </section>
+    </main>
+    <footer class="footer"><span>AgriORBIT NASA — Build with science. Innovate with purpose.</span><span>Historical context ≠ forecast · Experimental scores ≠ recommendations</span></footer>
+  </div>
+</div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

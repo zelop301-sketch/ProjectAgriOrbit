@@ -1,0 +1,1 @@
+AgriORBIT Phase 27 – 1.08s heartbeat, 3.0s/4.7s aura, static WebP, 15s progress maintained, FPS Boost option, port 8027; scientific data unchanged.

@@ -1,0 +1,12 @@
+PHASE 33 — BOTOLAN EL NINO FIELD SHIFT
+Actual AgriORBIT backend + ninth responsive UI tab (not a static picture)
+NASA POWER Jan-Oct 2026 versus matching 2021-25 months (on-demand online)
+95% month coverage / >= 3 reference years / missing evidence withheld
+DOST-PAGASA Nov 04 2026 national El Nino advisory with source URL
+Unranked farmer crop-rotation research options, irrigation/soil questions
+Downloadable auditable Markdown judge briefing
+Explicitly labelled synthetic rehearsal (-35% rain, +1 C, fabricated)
+Earlier illustration only in optional concept disclosure
+Phase 32 visual/performance features preserved
+190 automated tests passed; actual live NASA access and complete Windows deployment not independently verified here
+Port 8033 / build phase33-botolan-field-shift-3.3.0

@@ -1,0 +1,92 @@
+/* Phase 33 • Botolan Field Shift — scoped styles, keeps all other dashboard modules intact. */
+.b33-view{--b33-line:#175667;--b33-cyan:#41dff0;--b33-green:#79f9a4;color:#e6f4f2}
+.b33-view a{color:#9beff8}
+.b33-head{display:flex;justify-content:space-between;align-items:center;gap:18px;margin:6px 0 14px;flex-wrap:wrap}
+.b33-head h1{margin:7px 0 4px;font-size:clamp(25px,3.5vw,38px);line-height:1.14;letter-spacing:-.025em}
+.b33-head em{color:#77efb1;font-style:normal}
+.b33-head p{color:#abcbd0;font-size:14px;margin:0;max-width:900px}
+.b33-pill{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border:1px solid #237986;border-radius:7px;font-size:11px;font-weight:800;letter-spacing:.035em;color:#acf3de;background:#062d38;text-transform:uppercase;white-space:nowrap}
+.b33-alert{color:#ffc7c7;border-color:#a95765;background:rgba(128,36,51,.22)}
+.b33-warning{border:1px solid rgba(240,190,90,.45);border-left:3px solid #e6b95f;border-radius:8px;background:rgba(134,94,32,.12);padding:12px 15px;color:#e7e3d7;line-height:1.53;font-size:13px}
+.b33-warning strong{color:#ffe0a2}
+.b33-action-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px;padding:13px;border:1px solid #1d6371;background:linear-gradient(100deg,rgba(5,53,65,.84),rgba(4,31,44,.9));border-radius:11px}
+.b33-action-copy{display:flex;flex:1 1 220px;min-width:170px;flex-direction:column;gap:3px}
+.b33-action-copy strong{font-size:13px;color:#d1f6ef}
+.b33-action-copy span{font-size:11px;color:#aad5d3}
+.b33-action-bar .btn{font-size:11px;white-space:normal;text-align:center;min-height:37px}
+.b33-action-bar .b33-pill{margin-left:auto}
+.b33-synthetic{color:#ffe19a!important;border-color:#e7b36c!important;background:#49321d!important}
+.b33-status{padding:9px 2px 12px;color:#c5e7e0;font-size:12px;line-height:1.5;min-height:34px}
+.b33-error{color:#ffbdbd!important}
+.b33-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:13px}
+.b33-kpi{min-width:0;border:1px solid #226478;background:linear-gradient(160deg,#073343,#041f30 74%);border-radius:10px;padding:15px 14px;display:flex;flex-direction:column;gap:7px;min-height:115px}
+.b33-kpi>span{font-size:10px;letter-spacing:.06em;font-weight:850;color:#b1d9da}
+.b33-kpi strong{font-size:clamp(21px,2.2vw,29px);color:#75f4c2;font-variant-numeric:tabular-nums;line-height:1.15;word-break:break-word}
+.b33-kpi strong.b33-red{color:#ff8890}
+.b33-kpi small{font-size:10.5px;color:#c0d5d8;line-height:1.5}
+.b33-mid-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:13px;margin-bottom:13px}
+.b33-panel{border:1px solid #187a88;border-radius:11px;padding:16px;background:linear-gradient(145deg,rgba(3,45,60,.94),rgba(2,25,41,.96));box-shadow:inset 0 1px rgba(122,238,218,.08);min-width:0}
+.b33-panel-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding-bottom:10px;border-bottom:1px solid rgba(90,202,212,.22);margin-bottom:10px}
+.b33-panel-head h2{font-size:15px;color:#e9fffb;margin:6px 0 0}
+.b33-panel-head .eyebrow{font-size:10px;color:#6debc3}
+.b33-mini{font-size:10px;white-space:nowrap;color:#b9ece1;border:1px solid #236477;border-radius:4px;padding:5px 7px}
+.b33-muted{font-size:11.5px;color:#bcd3da;line-height:1.65;margin:8px 0}
+.b33-muted strong{color:#f0f9f5}
+.b33-chart{width:100%;min-height:205px;border-radius:8px;background:linear-gradient(150deg,#062638,#03202c);border:1px solid #125465;padding:4px;overflow:hidden}
+.b33-chart svg{width:100%;height:auto;display:block;max-height:242px}
+.b33-chart-empty{min-height:205px;display:flex;align-items:center;justify-content:center;text-align:center;color:#aac9c8;padding:15px;font-size:12px}
+.b33-legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:9px;color:#c6e5df;font-size:11px}
+.b33-legend span{display:flex;align-items:center;gap:7px}
+.b33-key{width:23px;height:3px;display:inline-block;background:#42d8eb;border-radius:5px}
+.b33-key-recent{background:#74f6a6}
+.b33-decision-grid{grid-template-columns:1.05fr .95fr}
+.b33-farm-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:10px 0}
+.b33-farm-controls label{font-size:11px;color:#bddee0;display:flex;flex-direction:column;gap:5px}
+.b33-farm-controls select{max-width:100%;width:100%;padding:9px;border-radius:6px;color:#e9fbf6;background:#093c47;border:1px solid #277487;font:inherit}
+.b33-rotations{display:flex;flex-direction:column;gap:7px}
+.b33-rotation{border:1px solid rgba(80,169,180,.35);border-radius:8px;padding:10px;display:flex;gap:12px;align-items:flex-start;background:rgba(2,24,38,.72)}
+.b33-rotation-num{border:1px solid #298c91;border-radius:50%;padding:6px;color:#87ffe0;font-size:11px}
+.b33-rotation div{flex:1;min-width:0}
+.b33-rotation h3{margin:0 0 4px;font-size:14px;color:#f5fef7}
+.b33-rotation small{color:#79edca;font-weight:750;font-size:10px}
+.b33-rotation p{font-size:11px;line-height:1.55;color:#becfd3;margin:5px 0 0}
+.b33-need-review{font-size:9px;font-weight:800;color:#ffce91;border:1px solid #98714d;border-radius:5px;padding:5px 6px;white-space:nowrap}
+.b33-insight{background:rgba(10,91,95,.25);border-left:3px solid #5ff2b7;padding:11px 13px;border-radius:6px;font-size:12px;line-height:1.5}
+.b33-insight strong{color:#b5ffe2}
+.b33-insight p{margin:6px 0}
+.b33-checks{list-style:decimal outside;padding:0 0 0 22px;font-size:12px;line-height:1.65;color:#d3e8e3}
+.b33-checks li{padding:3px 0}
+.b33-export-hint{margin-top:8px}
+.b33-table-scroll{overflow-x:auto;margin-top:12px;border-radius:7px;border:1px solid #235968}
+.b33-table-scroll table{width:100%;border-collapse:collapse;white-space:nowrap;font-size:11px;text-align:left}
+.b33-table-scroll th,.b33-table-scroll td{padding:10px;border-bottom:1px solid #1c4a55}
+.b33-table-scroll thead{background:#075063;color:#e1faf4}
+.b33-table-scroll tbody tr:nth-child(odd){background:rgba(6,57,70,.25)}
+.b33-table-scroll tbody tr.b33-missing{color:#c3a7a1}
+.b33-sources{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:12px}
+.b33-source-row{display:flex;flex-direction:column;gap:5px;min-width:0;border:1px solid #255f6c;border-radius:7px;padding:10px;background:#032635;color:#bed8d5;font-size:10.5px;overflow-wrap:anywhere;line-height:1.5}
+.b33-source-row strong{color:#e3fff5}
+.b33-concept{margin-top:15px;border:1px solid #2d666b;border-radius:8px;padding:10px 12px;color:#d0e9de}
+.b33-concept summary{cursor:pointer;font-size:12px;font-weight:750}
+.b33-concept img{display:block;max-width:100%;height:auto;margin:12px auto 2px;border:1px solid #2c6879;border-radius:8px}
+.b33-footer{text-align:center;color:#98b5b8;font-size:10px;letter-spacing:.04em;padding:13px 0 8px}
+.b33-command-link{display:flex;justify-content:space-between;align-items:center;gap:13px;flex-wrap:wrap;padding:12px 15px;border:1px solid rgba(116,246,166,.6);border-radius:10px;background:linear-gradient(100deg,rgba(10,80,69,.76),rgba(6,35,51,.9));margin:0 0 11px}
+.b33-command-link>div{display:flex;flex-direction:column;gap:4px}
+.b33-command-link b{font-size:12px;color:#7fffc7}
+.b33-command-link span{font-size:11px;color:#bfdbd5}
+.b33-command-link .btn{font-size:12px}
+@media(max-width:1040px){.b33-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.b33-mid-grid{grid-template-columns:minmax(0,1fr)}.b33-sources{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:620px){.b33-head{align-items:flex-start}.b33-alert{white-space:normal}.b33-action-bar .btn{flex:1 1 150px}.b33-kpi{min-height:100px;padding:11px}.b33-kpi strong{font-size:21px}.b33-panel{padding:12px}.b33-farm-controls{grid-template-columns:1fr}.b33-mini{white-space:normal}.b33-rotation{flex-wrap:wrap}.b33-need-review{margin-left:35px}.b33-command-link .btn{width:100%}}
+@media(prefers-reduced-motion:reduce){.b33-view *{scroll-behavior:auto!important}}
+
+/* All other Phase32 views retain their light theme; the Botolan mission matches
+   the requested dark holographic artwork ONLY while that tab is active. */
+body.botolan-mode{background:#041a28;color:#e2f5f1}
+body.botolan-mode .body-container{background:radial-gradient(circle at 65% 3%,rgba(2,109,103,.14),transparent 42%),#041a28}
+body.botolan-mode .topbar{background:#061d2c;border-bottom:1px solid #184c5d;color:#c3e9e5}
+body.botolan-mode .breadcrumbs,body.botolan-mode .breadcrumbs b{color:#a3d7d3}
+body.botolan-mode .top-link{color:#7cf6d6}
+body.botolan-mode .top-chip{background:#0a4a3a;color:#a5fbd0}
+body.botolan-mode .mobile-workspace-tabs{background:#082a3b;border-color:#20566a}
+.b33-view .b33-head h1{color:#f0fffb}
+.b33-view .b33-head .eyebrow{color:#51efbc}
